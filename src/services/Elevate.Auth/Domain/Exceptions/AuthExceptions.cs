@@ -7,7 +7,7 @@ public sealed class InvalidCredentialsException()
     : Exception("Invalid email or password."); 
 
 public sealed class AccountLockedException(DateTime lockedUntil)
-    : Exception($"Account is locked until {lockedUntil:O}."); 23
+    : Exception($"Account is locked until {lockedUntil:O}."); 
 
 public sealed class ProfileAlreadyCompletedException(Guid userId)
     : Exception($"User '{userId}' has already completed profile setup.");

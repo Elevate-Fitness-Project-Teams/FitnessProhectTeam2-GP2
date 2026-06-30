@@ -40,7 +40,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="207a1b29-003f-4754-9644-b0f73aafac07" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/ElevateFitnessApp.sln" beforeDir="false" afterPath="$PROJECT_DIR$/ElevateFitnessApp.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ElevateFitnessApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ElevateFitnessApp/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Auth/Domain/Exceptions/AuthExceptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Auth/Domain/Exceptions/AuthExceptions.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,7 +167,7 @@
     "cidr.known.project.marker": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "Nutrition-Service",
+    "git-widget-placeholder": "main",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -716,7 +718,7 @@
       <workItem from="1782688359299" duration="926000" />
       <workItem from="1782691562431" duration="1563000" />
       <workItem from="1782737189660" duration="50000" />
-      <workItem from="1782737254777" duration="11162000" />
+      <workItem from="1782737254777" duration="11801000" />
     </task>
     <servers />
   </component>

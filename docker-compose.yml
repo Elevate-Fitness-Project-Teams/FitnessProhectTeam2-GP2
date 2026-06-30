@@ -95,3 +95,78 @@ volumes:
       context: .
       dockerfile: src/services/Elevate.Nutrition/Dockerfile
 
+services:
+  elevate.nutrition:
+    image: elevate.nutrition
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Nutrition/Dockerfile
+
+services:
+  elevate.nutrition:
+    image: elevate.nutrition
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Nutrition/Dockerfile
+
+services:
+  elevate.auth:
+    image: elevate.auth
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Auth/Dockerfile
+
+  elevate.fitnesscalculation:
+    image: elevate.fitnesscalculation
+    build:
+      context: .
+      dockerfile: src/services/FitnessCalculation/Dockerfile
+
+  elevate.notifications:
+    image: elevate.notifications
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Notifications/Dockerfile
+
+  elevate.nutrition:
+    image: elevate.nutrition
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Nutrition/Dockerfile
+
+  elevate.profile:
+    image: elevate.profile
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Profile/Dockerfile
+
+  elevate.progress:
+    image: elevate.progress
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Progress/Dockerfile
+
+  elevate.workout:
+    image: elevate.workout
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Workout/Dockerfile
+
+  elevate.smartcoach:
+    image: elevate.smartcoach
+    build:
+      context: .
+      dockerfile: src/services/Elevate.smartCoach/Dockerfile
+
+  elevate.subscription:
+    image: elevate.subscription
+    build:
+      context: .
+      dockerfile: src/services/Elevate.subscription/Dockerfile
+
+  sharedkernel:
+    image: sharedkernel
+    build:
+      context: .
+      dockerfile: SharedKernel/Dockerfile
+
