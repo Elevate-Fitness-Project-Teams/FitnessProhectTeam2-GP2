@@ -1,7 +1,7 @@
 ﻿using Elevate.Profile.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace Elevate.Profile.Domain
+namespace Elevate.Profile.Domain.Entities
 {
     public class UserPreferences
     {

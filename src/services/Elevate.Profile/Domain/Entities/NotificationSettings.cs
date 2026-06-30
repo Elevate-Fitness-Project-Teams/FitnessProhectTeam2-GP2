@@ -1,4 +1,4 @@
-﻿namespace Elevate.Profile.Domain
+﻿namespace Elevate.Profile.Domain.Entities
 {
     public class NotificationSettings
     {
