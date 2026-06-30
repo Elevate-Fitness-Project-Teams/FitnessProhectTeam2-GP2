@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36616.10
+# Visual Studio Version 18
+VisualStudioVersion = 18.4.11626.88 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -11,6 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elevate.Auth", "src\service
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elevate.Profile", "src\services\Elevate.Profile\Elevate.Profile.csproj", "{60FB542F-4ED2-4D04-BF38-CD38BF40EED5}"
 EndProject
+<<<<<<< HEAD
+=======
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elevate.FitnessCalculation", "src\services\FitnessCalculation\Elevate.FitnessCalculation.csproj", "{6C902DF4-5DE1-45FC-BFFC-4700930DE217}"
+EndProject
+>>>>>>> origin/main
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elevate.Workout", "src\services\Elevate.Workout\Elevate.Workout.csproj", "{80194B18-E3BD-4B85-A625-3E9B14C8DF20}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elevate.Nutrition", "src\services\Elevate.Nutrition\Elevate.Nutrition.csproj", "{E38D29E6-02A5-4E0D-9F2C-E129E3479876}"
@@ -39,9 +44,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "subsriptions", "subsription
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workout", "Workout", "{49424952-13A4-4472-BAAE-E44F4357585B}"
 EndProject
+<<<<<<< HEAD
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FitnessCalculation", "FitnessCalculation", "{EB516B63-2282-470B-AECA-576F77666C29}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessCalculation", "src\services\FitnessCalculation\FitnessCalculation\FitnessCalculation.csproj", "{41CF575B-DBEF-4D01-AB6D-FD87E0AE0F85}"
+=======
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel", "SharedKernel\SharedKernel.csproj", "{175934E6-8ECE-48AF-BD74-BA80C53CD25F}"
+>>>>>>> origin/main
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,10 +90,17 @@ Global
 		{5A345F66-8A4F-4410-88DD-FC861CB9D29A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A345F66-8A4F-4410-88DD-FC861CB9D29A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A345F66-8A4F-4410-88DD-FC861CB9D29A}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
 		{41CF575B-DBEF-4D01-AB6D-FD87E0AE0F85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{41CF575B-DBEF-4D01-AB6D-FD87E0AE0F85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41CF575B-DBEF-4D01-AB6D-FD87E0AE0F85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41CF575B-DBEF-4D01-AB6D-FD87E0AE0F85}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+		{175934E6-8ECE-48AF-BD74-BA80C53CD25F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{175934E6-8ECE-48AF-BD74-BA80C53CD25F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{175934E6-8ECE-48AF-BD74-BA80C53CD25F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{175934E6-8ECE-48AF-BD74-BA80C53CD25F}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> origin/main
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,8 +123,12 @@ Global
 		{26E8AB6D-2BE3-4356-AA23-C6604FC69A31} = {01F0708C-BC63-4CE8-BDD6-FA16113E4386}
 		{14858F89-A17D-46CC-B248-E0C2C81FA6F9} = {01F0708C-BC63-4CE8-BDD6-FA16113E4386}
 		{49424952-13A4-4472-BAAE-E44F4357585B} = {01F0708C-BC63-4CE8-BDD6-FA16113E4386}
+<<<<<<< HEAD
 		{EB516B63-2282-470B-AECA-576F77666C29} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{41CF575B-DBEF-4D01-AB6D-FD87E0AE0F85} = {EB516B63-2282-470B-AECA-576F77666C29}
+=======
+		{175934E6-8ECE-48AF-BD74-BA80C53CD25F} = {01F0708C-BC63-4CE8-BDD6-FA16113E4386}
+>>>>>>> origin/main
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {45FBC76C-66CB-47BC-87EE-79A58506BBA5}
