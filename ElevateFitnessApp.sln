@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elevate.Auth", "src\service
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elevate.Profile", "src\services\Elevate.Profile\Elevate.Profile.csproj", "{60FB542F-4ED2-4D04-BF38-CD38BF40EED5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elevate.FitnessCalculation", "src\services\Elevate.Fitness\Elevate.FitnessCalculation.csproj", "{6C902DF4-5DE1-45FC-BFFC-4700930DE217}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elevate.FitnessCalculation", "src\services\FitnessCalculation\Elevate.FitnessCalculation.csproj", "{6C902DF4-5DE1-45FC-BFFC-4700930DE217}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elevate.Workout", "src\services\Elevate.Workout\Elevate.Workout.csproj", "{80194B18-E3BD-4B85-A625-3E9B14C8DF20}"
 EndProject

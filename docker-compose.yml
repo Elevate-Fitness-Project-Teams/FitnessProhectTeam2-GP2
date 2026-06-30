@@ -1,0 +1,97 @@
+services:
+  nutrition-db:
+    image: mariadb:11.4
+    container_name: elevate-nutrition-db
+    restart: unless-stopped
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: nutrition
+      MYSQL_USER: nutrition_user
+      MYSQL_PASSWORD: nutrition_pass
+    volumes:
+      - nutrition-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  nutrition-api:
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Nutrition/Dockerfile
+    container_name: elevate-nutrition-api
+    restart: unless-stopped
+    ports:
+      - "5002:8080"
+    depends_on:
+      nutrition-db:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__NutritionDb=server=nutrition-db;port=3306;database=nutrition;user=root;password=rootpassword;CharSet=utf8mb4
+
+volumes:
+  nutrition-db-data:
+  elevate.auth:
+    image: elevate.auth
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Auth/Dockerfile
+
+  elevate.fitnesscalculation:
+    image: elevate.fitnesscalculation
+    build:
+      context: .
+      dockerfile: src/services/FitnessCalculation/Dockerfile
+
+  elevate.notifications:
+    image: elevate.notifications
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Notifications/Dockerfile
+
+  elevate.nutrition:
+    image: elevate.nutrition
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Nutrition/Dockerfile
+
+  elevate.profile:
+    image: elevate.profile
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Profile/Dockerfile
+
+  elevate.progress:
+    image: elevate.progress
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Progress/Dockerfile
+
+  elevate.workout:
+    image: elevate.workout
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Workout/Dockerfile
+
+  elevate.smartcoach:
+    image: elevate.smartcoach
+    build:
+      context: .
+      dockerfile: src/services/Elevate.smartCoach/Dockerfile
+
+  elevate.subscription:
+    image: elevate.subscription
+    build:
+      context: .
+      dockerfile: src/services/Elevate.subscription/Dockerfile
+
+  elevate.nutrition:
+    image: elevate.nutrition
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Nutrition/Dockerfile
+

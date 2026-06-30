@@ -1,0 +1,19 @@
+namespace Elevate.Nutrition.Domain.Common;
+
+public abstract class BaseEntity<TId> where TId : notnull
+{
+    public TId Id { get; protected set; } = default!;
+    public DateTime CreatedAt { get; protected set; }
+    public DateTime UpdatedAt { get; protected set; }
+
+    public override bool Equals(object? obj)
+        => obj is BaseEntity<TId> other && Id.Equals(other.Id);
+
+    public override int GetHashCode() => Id.GetHashCode();
+
+    public static bool operator ==(BaseEntity<TId>? left, BaseEntity<TId>? right)
+        => Equals(left, right);
+
+    public static bool operator !=(BaseEntity<TId>? left, BaseEntity<TId>? right)
+        => !Equals(left, right);
+}
