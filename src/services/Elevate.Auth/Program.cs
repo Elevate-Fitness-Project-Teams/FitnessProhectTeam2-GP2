@@ -54,6 +54,10 @@ namespace Elevate.Auth
                 {
                     var dbContext = services.GetRequiredService<AuthDbContext>();
 
+<<<<<<< HEAD
+
+
+=======
                     logger.LogInformation("[AuthService] Starting database migration & seeding...");
                     await AuthDbSeeder.SeedAsync(dbContext, logger);
                 }
@@ -62,6 +66,7 @@ namespace Elevate.Auth
                     logger.LogError(ex, "[AuthService] An error occurred while migrating or seeding the database.");
                 }
             }
+>>>>>>> origin/main
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
