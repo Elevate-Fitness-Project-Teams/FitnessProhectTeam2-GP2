@@ -40,9 +40,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="207a1b29-003f-4754-9644-b0f73aafac07" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ElevateFitnessApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ElevateFitnessApp/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Auth/Domain/Exceptions/AuthExceptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Auth/Domain/Exceptions/AuthExceptions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Controllers/WeatherForecastController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/WeatherForecast.cs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,61 +83,61 @@
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0000000000000573" />
-      <entry key="S5" value="1.000013251080695" />
-      <entry key="S10" value="1.0081387515902214" />
-      <entry key="S30" value="1.5881492482496113" />
-      <entry key="S60" value="2.7148546357303633" />
-      <entry key="M2" value="3.9281835216822043" />
-      <entry key="M5" value="5.036651269291133" />
-      <entry key="M10" value="5.492856238846353" />
-      <entry key="M15" value="5.675015065079606" />
-      <entry key="M30" value="7.167898745725379" />
-      <entry key="H1" value="17.14004789589821" />
-      <entry key="H2" value="38.437920121901406" />
-      <entry key="H4" value="61.23230376830152" />
-      <entry key="D1" value="92.02930794585745" />
-      <entry key="W1" value="98.81766439260439" />
+      <entry key="MS100" value="1.0000162363240506" />
+      <entry key="MS500" value="1.247364436981857" />
+      <entry key="S2" value="3.1291606283099496" />
+      <entry key="S5" value="4.67034580945905" />
+      <entry key="S10" value="6.33586885602042" />
+      <entry key="S30" value="14.253344498636858" />
+      <entry key="S60" value="21.544451294820746" />
+      <entry key="M2" value="27.51760271013183" />
+      <entry key="M5" value="32.26484487251409" />
+      <entry key="M10" value="34.381127678294376" />
+      <entry key="M15" value="35.60133138229413" />
+      <entry key="M30" value="38.57729612360187" />
+      <entry key="H1" value="42.58145417833866" />
+      <entry key="H2" value="46.336142705924225" />
+      <entry key="H4" value="50.97414260525351" />
+      <entry key="D1" value="111.55715790135669" />
+      <entry key="W1" value="186.25793281224082" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="4.787085313235365E-290" />
-      <entry key="MS500" value="1.3677736519668847E-58" />
-      <entry key="S2" value="3.41982244514494E-15" />
-      <entry key="S5" value="1.6353150112803886E-6" />
-      <entry key="S10" value="0.001278794358480044" />
-      <entry key="S30" value="0.10854260421984754" />
-      <entry key="S60" value="0.3294580462211349" />
-      <entry key="M2" value="0.5739843606067462" />
-      <entry key="M5" value="0.8008663085180742" />
-      <entry key="M10" value="0.8949527931497767" />
-      <entry key="M15" value="0.9313909355817147" />
-      <entry key="M30" value="1.1448025374781403" />
-      <entry key="H1" value="2.455717240566022" />
-      <entry key="H2" value="5.196379132111964" />
-      <entry key="H4" value="8.099319234828943" />
-      <entry key="D1" value="11.995197941410272" />
-      <entry key="W1" value="12.851029661335994" />
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="7.433022626027787E-137" />
+      <entry key="S10" value="8.621497912792061E-69" />
+      <entry key="S30" value="2.0505053612543873E-23" />
+      <entry key="S60" value="4.5282506128243224E-12" />
+      <entry key="M2" value="2.1279686587974737E-6" />
+      <entry key="M5" value="0.00538500475244213" />
+      <entry key="M10" value="0.07338259161710044" />
+      <entry key="M15" value="0.17527851978090403" />
+      <entry key="M30" value="0.4186627757366279" />
+      <entry key="H1" value="0.6470443625863105" />
+      <entry key="H2" value="0.8060676300876803" />
+      <entry key="H4" value="0.9444853743193206" />
+      <entry key="D1" value="5.242353157987109" />
+      <entry key="W1" value="12.776298987213792" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.9460576467255959" />
-      <entry key="MS500" value="0.9889709163809315" />
-      <entry key="S2" value="0.9972312513521282" />
-      <entry key="S5" value="0.9989060377321838" />
-      <entry key="S10" value="1.008687191973262" />
-      <entry key="S30" value="1.6913395068938293" />
-      <entry key="S60" value="3.03630171802164" />
-      <entry key="M2" value="4.495190043805897" />
-      <entry key="M5" value="5.833619069337072" />
-      <entry key="M10" value="6.385629696643434" />
-      <entry key="M15" value="6.604892264333045" />
-      <entry key="M30" value="8.311720382978674" />
-      <entry key="H1" value="19.594552201149952" />
-      <entry key="H2" value="43.632931331885636" />
-      <entry key="H4" value="69.33053437348802" />
-      <entry key="D1" value="104.02423374131199" />
-      <entry key="W1" value="111.66865232630066" />
+      <entry key="MS100" value="0.9138470112150664" />
+      <entry key="MS500" value="1.226748330166256" />
+      <entry key="S2" value="3.117595563996707" />
+      <entry key="S5" value="4.663370022546825" />
+      <entry key="S10" value="6.331293320096953" />
+      <entry key="S30" value="14.250192549325085" />
+      <entry key="S60" value="21.542109196132607" />
+      <entry key="M2" value="27.516116859358142" />
+      <entry key="M5" value="32.26952203707801" />
+      <entry key="M10" value="34.45406172780598" />
+      <entry key="M15" value="35.77623004196447" />
+      <entry key="M30" value="38.99567143370473" />
+      <entry key="H1" value="43.22830624866463" />
+      <entry key="H2" value="47.14209611782275" />
+      <entry key="H4" value="51.91856075485065" />
+      <entry key="D1" value="116.79940695049191" />
+      <entry key="W1" value="199.03419278260105" />
     </decayedShown>
   </component>
   <component name="ProblemsViewState">
@@ -167,7 +167,7 @@
     "cidr.known.project.marker": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Nutrition__Service",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -718,8 +718,41 @@
       <workItem from="1782688359299" duration="926000" />
       <workItem from="1782691562431" duration="1563000" />
       <workItem from="1782737189660" duration="50000" />
-      <workItem from="1782737254777" duration="11801000" />
+      <workItem from="1782737254777" duration="23928000" />
     </task>
+    <task id="LOCAL-00001" summary="Add the connectionstring , Edit the docker-compose.yml , Configure the Infrastrcture , The db context and configure its entities">
+      <option name="closed" value="true" />
+      <created>1782831875459</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1782831875460</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Add the repos , Unitofwork and the dependencyinjection">
+      <option name="closed" value="true" />
+      <created>1782892932168</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1782892932168</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add the Commands , Handlers , Validators and queries as well , Implement the validation Piplline">
+      <option name="closed" value="true" />
+      <created>1782898214347</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1782898214347</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Clean up">
+      <option name="closed" value="true" />
+      <created>1782898231285</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1782898231285</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -741,7 +774,11 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="rename fitness service" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="Add the connectionstring , Edit the docker-compose.yml , Configure the Infrastrcture , The db context and configure its entities" />
+    <MESSAGE value="Add the repos , Unitofwork and the dependencyinjection" />
+    <MESSAGE value="Add the Commands , Handlers , Validators and queries as well , Implement the validation Piplline" />
+    <MESSAGE value="Clean up" />
+    <option name="LAST_COMMIT_MESSAGE" value="Clean up" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

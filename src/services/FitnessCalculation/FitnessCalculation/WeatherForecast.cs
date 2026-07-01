@@ -1,4 +1,4 @@
-namespace Elevate.Nutrition
+namespace FitnessCalculation
 {
     public class WeatherForecast
     {

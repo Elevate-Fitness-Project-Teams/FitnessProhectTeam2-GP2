@@ -54,6 +54,45 @@ services:
     depends_on:
       nutrition-db:
         condition: service_healthy
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__NutritionDb=server=nutrition-db;port=3306;database=nutrition;user=nutrition_user;password=nutrition_pass;CharSet=utf8mb4
+
+  elevate.auth:
+    image: elevate.auth
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Auth/Dockerfile
+
+  elevate.fitnesscalculation:
+    image: elevate.fitnesscalculation
+    build:
+      context: .
+      dockerfile: src/services/FitnessCalculation/Dockerfile
+
+  elevate.notifications:
+    image: elevate.notifications
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Notifications/Dockerfile
+
+  elevate.profile:
+    image: elevate.profile
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Profile/Dockerfile
+
+  elevate.progress:
+    image: elevate.progress
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Progress/Dockerfile
+
+  elevate.workout:
+    image: elevate.workout
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Workout/Dockerfile
 
   elevate.smartcoach:
     build:
@@ -69,21 +108,6 @@ services:
     build:
       context: .
       dockerfile: src/services/Elevate.subscription/Dockerfile
-    container_name: elevate-subscription-api
-    restart: unless-stopped
-    ports:
-      - "5005:8080"
-
-  elevate.nutrition:
-    image: elevate.nutrition
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Nutrition/Dockerfile
-    container_name: elevate-nutrition-service-api
-    restart: unless-stopped
-    ports:
-      - "5006:8080"
 
 volumes:
   nutrition-db-data:
-  sqlserver-db-data:

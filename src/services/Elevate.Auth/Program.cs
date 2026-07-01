@@ -61,21 +61,28 @@ namespace Elevate.Auth
                     logger.LogError(ex, "[AuthService] An error occurred while migrating or seeding the database.");
                 }
             }
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            
 
-            app.UseHttpsRedirection();
+                    // Configure the HTTP request pipeline.
+                    if (app.Environment.IsDevelopment())
+                    {
+                        app.UseSwagger();
+                        app.UseSwaggerUI();
+                    }
 
-            app.UseAuthorization();
+                    app.UseHttpsRedirection();
+
+                    app.UseAuthorization();
 
 
-            app.MapControllers();
+                    app.MapControllers();
 
-            app.Run();
+                    app.Run();
+
+
+                
+            
         }
     }
 }
+    

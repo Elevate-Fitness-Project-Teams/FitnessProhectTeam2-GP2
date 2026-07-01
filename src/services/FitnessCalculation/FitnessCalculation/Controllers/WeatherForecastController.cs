@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Elevate.Nutrition.Controllers
+namespace FitnessCalculation.Controllers
 {
     [ApiController]
     [Route("[controller]")]
