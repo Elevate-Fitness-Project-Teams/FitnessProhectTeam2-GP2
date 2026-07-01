@@ -53,7 +53,6 @@ namespace Elevate.Auth
                 try
                 {
                     var dbContext = services.GetRequiredService<AuthDbContext>();
-
                     logger.LogInformation("[AuthService] Starting database migration & seeding...");
                     await AuthDbSeeder.SeedAsync(dbContext, logger);
                 }

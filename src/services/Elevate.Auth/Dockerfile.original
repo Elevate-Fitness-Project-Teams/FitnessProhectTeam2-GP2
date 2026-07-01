@@ -13,7 +13,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/services/Elevate.Auth/Elevate.Auth.csproj", "src/services/Elevate.Auth/"]
-COPY ["SharedKernel/SharedKernel.csproj", "SharedKernel/"]
 RUN dotnet restore "./src/services/Elevate.Auth/Elevate.Auth.csproj"
 COPY . .
 WORKDIR "/src/src/services/Elevate.Auth"
