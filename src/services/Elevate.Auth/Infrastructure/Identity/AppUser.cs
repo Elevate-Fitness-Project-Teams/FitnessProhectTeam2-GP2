@@ -1,16 +1,125 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Elevate.Auth.Domain.DomainEvents;
+using Elevate.Auth.Domain.Entities;
+using Elevate.Auth.Domain.Enums;
+using Elevate.Auth.Domain.ValueObjects;
+using Microsoft.AspNetCore.Identity;
+using SharedKernel.Interfaces;
+namespace Elevate.Auth.Infrastructure.Identity; 
 
-namespace Elevate.Auth.Infrastructure.Identity
+public sealed class AppUser
+    : IdentityUser<Guid>
 {
-    public class AppUser :IdentityUser<Guid>
+    public FullName Name { get; private set; } = default!;
+
+    public bool RequiresProfileCompletion { get; private set; }
+
+    public bool IsActive { get; private set; }
+
+    public bool IsDeleted { get; private set; }
+    public bool IsLockedOut { get; private set; }
+    public DateTime? LockedUntil { get; private set; }
+    public DateTime CreatedAt { get; private set; }
+
+    public DateTime? UpdatedAt { get; private set; }
+
+    private readonly List<LoginAttempt> _loginAttempts = [];
+
+    private readonly List<RefreshToken> _refreshTokens = [];
+
+    private readonly List<OtpCode> _otpCodes = [];
+
+    private readonly List<IDomainEvent> _domainEvents = [];
+
+    public IReadOnlyCollection<LoginAttempt> LoginAttempts
+        => _loginAttempts;
+
+    public IReadOnlyCollection<RefreshToken> RefreshTokens
+        => _refreshTokens;
+
+    public IReadOnlyCollection<OtpCode> OtpCodes
+        => _otpCodes;
+
+    public IReadOnlyCollection<IDomainEvent> DomainEvents
+        => _domainEvents;
+
+    private AppUser() { }
+
+    public static AppUser RegisterUser(
+        FullName name,
+        Email email,
+        string phone,
+        DateTime now)
     {
-        public FullName Name { get; set; } = null!;
-        public bool RequiresProfileCompletion { get; set; } = true;
-        public bool IsActive { get; set; } = true;
-        public DateTime CreatedAt { get; set; }
-        public DateTime? UpdatedAt { get; set; }
-        public DateTime? LastLoginAt { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTime? DeletedAt { get; set; }
+        var user = new AppUser();
+
+        user.Id = Guid.NewGuid();
+
+        user.Name = name;
+
+        user.Email = email;
+
+        user.UserName = email;
+
+        user.PhoneNumber = phone;
+
+        user.CreatedAt = now;
+
+        user.RequiresProfileCompletion = true;
+
+        user.IsActive = true;
+
+        user.AddDomainEvent(
+            new UserRegisteredEvent(user.Id, email, now));
+
+        return user;
     }
+
+    public void CompleteProfile(DateTime now)
+    {
+        RequiresProfileCompletion = false;
+
+        UpdatedAt = now;
+
+        AddDomainEvent(
+            new UserProfileCompletedEvent(Id, now));
+    }
+    public bool IsCurrentlyLockedOut(DateTime now) =>
+        IsLockedOut && LockedUntil.HasValue && LockedUntil.Value > now;
+    public LoginAttemptResult EvaluateLockout(
+       bool passwordCorrect,
+       IReadOnlyList<LoginAttempt> recentAttempts,
+       DateTime now)
+    {
+        if (passwordCorrect)
+        {
+            IsLockedOut = false;
+            LockedUntil = null;
+            UpdatedAt = now;
+            return LoginAttemptResult.Success;
+        }
+
+        var failuresInWindow = recentAttempts.Count(a => !a.IsSuccess);
+
+        if (failuresInWindow + 1 >= 5)
+        {
+            IsLockedOut = true;
+            LockedUntil = now.AddMinutes(15);
+            UpdatedAt = now;
+            AddDomainEvent(new UserLockedOutEvent(Id, LockedUntil.Value, now));
+            return LoginAttemptResult.LockedOut;
+        }
+
+        return LoginAttemptResult.InvalidCredentials;
+    }
+
+    private void AddDomainEvent(IDomainEvent domainEvent)
+        => _domainEvents.Add(domainEvent);
+    public void ResetPassword(DateTime now)
+    {
+        // PasswordHash is set by UserManager before this is called
+        UpdatedAt = now;
+        AddDomainEvent(new PasswordResetEvent(Id, now));
+    }
+    public void ClearDomainEvents()
+        => _domainEvents.Clear();
 }

@@ -49,8 +49,6 @@ services:
     restart: unless-stopped
     ports:
       - "5003:8080"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
       nutrition-db:
         condition: service_healthy
@@ -58,11 +56,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__NutritionDb=server=nutrition-db;port=3306;database=nutrition;user=nutrition_user;password=nutrition_pass;CharSet=utf8mb4
 
-  elevate.auth:
-    image: elevate.auth
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Auth/Dockerfile
+ 
 
   elevate.fitnesscalculation:
     image: elevate.fitnesscalculation
@@ -111,3 +105,4 @@ services:
 
 volumes:
   nutrition-db-data:
+  sqlserver-db-data:

@@ -9,6 +9,6 @@ namespace SharedKernel.Interfaces
 {
     public interface IDomainEvent : INotification
     {
-        DateTime OccurredAt { get; }
+        DateTime OccurredAt { get; }   
     }
 }
