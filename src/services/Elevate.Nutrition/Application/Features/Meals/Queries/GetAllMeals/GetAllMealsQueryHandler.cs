@@ -5,15 +5,15 @@ using Elevate.Nutrition.Domain.Interfaces;
 
 namespace Elevate.Nutrition.Application.Features.Meals.Queries.GetAllMeals;
 
-public class GetAllMealsQueryHandler : IRequestHandler<GetAllMealsQuery, Result<IEnumerable<Meal>>>
+public class GetAllMealsQueryHandler : IRequestHandler<GetAllMealsQuery, Result<PagedResult<Meal>>>
 {
     private readonly IMealRepository _repo;
 
     public GetAllMealsQueryHandler(IMealRepository repo) => _repo = repo;
 
-    public async Task<Result<IEnumerable<Meal>>> Handle(GetAllMealsQuery query, CancellationToken ct)
+    public async Task<Result<PagedResult<Meal>>> Handle(GetAllMealsQuery query, CancellationToken ct)
     {
-        var meals = await _repo.GetAllAsync(ct);
-        return Result.Success(meals);
+        var result = await _repo.GetPagedAsync(query.Page, query.PageSize, ct);
+        return Result.Success(result);
     }
 }

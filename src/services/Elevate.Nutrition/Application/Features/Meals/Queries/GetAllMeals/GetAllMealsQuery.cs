@@ -4,4 +4,4 @@ using Elevate.Nutrition.Domain.Entities;
 
 namespace Elevate.Nutrition.Application.Features.Meals.Queries.GetAllMeals;
 
-public record GetAllMealsQuery : IRequest<Result<IEnumerable<Meal>>>;
+public record GetAllMealsQuery(int Page = 1, int PageSize = 10) : IRequest<Result<PagedResult<Meal>>>;
