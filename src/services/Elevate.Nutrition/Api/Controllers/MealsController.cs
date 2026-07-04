@@ -74,7 +74,7 @@ public class MealsController : ControllerBase
         if (result.IsSuccess)
             return Ok(ApiEnvelope.FromResult(result));
 
-        if (result.Error?.Contains("not found") ?? false)
+        if (result.ErrorType is ErrorType.NotFound)
             return NotFound(ApiEnvelope.FromResult(result));
 
         return BadRequest(ApiEnvelope.FromResult(result));

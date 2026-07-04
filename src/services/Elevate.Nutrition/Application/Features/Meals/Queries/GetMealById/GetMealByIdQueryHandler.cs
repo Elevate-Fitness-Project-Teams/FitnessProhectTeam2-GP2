@@ -16,7 +16,7 @@ public class GetMealByIdQueryHandler : IRequestHandler<GetMealByIdQuery, Result<
         var meal = await _repo.GetByIdAsync(query.Id, ct);
 
         if (meal is null)
-            return Result.Failure<MealDto?>("Meal not found");
+            return Result.Failure<MealDto?>("Meal not found", ErrorType.NotFound);
 
         return Result.Success<MealDto?>(MealDto.FromEntity(meal));
     }
