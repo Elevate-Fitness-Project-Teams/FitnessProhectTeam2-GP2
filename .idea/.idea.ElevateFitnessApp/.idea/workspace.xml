@@ -47,14 +47,14 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ElevateFitnessApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ElevateFitnessApp/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/MealPlans/Queries/GetAllMealPlans/GetAllMealPlansQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/MealPlans/Queries/GetAllMealPlans/GetAllMealPlansQuery.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/MealPlans/Queries/GetAllMealPlans/GetAllMealPlansQueryHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/MealPlans/Queries/GetAllMealPlans/GetAllMealPlansQueryHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/MealPlans/Queries/GetMealPlanById/GetMealPlanByIdQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/MealPlans/Queries/GetMealPlanById/GetMealPlanByIdQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/MealPlans/Queries/GetMealPlanById/GetMealPlanByIdQueryHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/MealPlans/Queries/GetMealPlanById/GetMealPlanByIdQueryHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/GetAllMeals/GetAllMealsQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/GetAllMeals/GetAllMealsQuery.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/GetAllMeals/GetAllMealsQueryHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/GetAllMeals/GetAllMealsQueryHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/GetMealById/GetMealByIdQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/GetMealById/GetMealByIdQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/GetMealById/GetMealByIdQueryHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/GetMealById/GetMealByIdQueryHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/SearchMealsByTags/SearchMealsByTagsQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/SearchMealsByTags/SearchMealsByTagsQuery.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/SearchMealsByTags/SearchMealsByTagsQueryHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/SearchMealsByTags/SearchMealsByTagsQueryHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Domain/Interfaces/IMealPlanRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Domain/Interfaces/IMealPlanRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Domain/Interfaces/IMealRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Domain/Interfaces/IMealRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Infrastructure/Persistence/Repositories/MealPlanRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Infrastructure/Persistence/Repositories/MealPlanRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Infrastructure/Persistence/Repositories/MealRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Infrastructure/Persistence/Repositories/MealRepository.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +62,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="58" />
+    <option name="cachedIndexableFilesCount" value="60" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -95,61 +95,61 @@
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0000162363240506" />
-      <entry key="MS500" value="1.247364436981857" />
-      <entry key="S2" value="3.1291606283099496" />
-      <entry key="S5" value="4.67034580945905" />
-      <entry key="S10" value="6.33586885602042" />
-      <entry key="S30" value="14.253344498636858" />
-      <entry key="S60" value="21.544451294820746" />
-      <entry key="M2" value="27.51760271013183" />
-      <entry key="M5" value="32.26484487251409" />
-      <entry key="M10" value="34.381127678294376" />
-      <entry key="M15" value="35.60133138229413" />
-      <entry key="M30" value="38.57729612360187" />
-      <entry key="H1" value="42.58145417833866" />
-      <entry key="H2" value="46.336142705924225" />
-      <entry key="H4" value="50.97414260525351" />
-      <entry key="D1" value="111.55715790135669" />
-      <entry key="W1" value="186.25793281224082" />
+      <entry key="MS100" value="1.5547762815383896" />
+      <entry key="MS500" value="3.506902040598296" />
+      <entry key="S2" value="8.10601775044017" />
+      <entry key="S5" value="17.77088499920057" />
+      <entry key="S10" value="33.75465150128263" />
+      <entry key="S30" value="72.01361628708861" />
+      <entry key="S60" value="97.0912170079803" />
+      <entry key="M2" value="117.59892808301605" />
+      <entry key="M5" value="134.69066754560458" />
+      <entry key="M10" value="141.79208422639115" />
+      <entry key="M15" value="144.77964077943292" />
+      <entry key="M30" value="149.57293928093287" />
+      <entry key="H1" value="154.5232890029543" />
+      <entry key="H2" value="158.78168464284047" />
+      <entry key="H4" value="163.68166628363397" />
+      <entry key="D1" value="224.4758628776153" />
+      <entry key="W1" value="299.2405911073238" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="0.0" />
-      <entry key="S2" value="0.0" />
-      <entry key="S5" value="7.433022626027787E-137" />
-      <entry key="S10" value="8.621497912792061E-69" />
-      <entry key="S30" value="2.0505053612543873E-23" />
-      <entry key="S60" value="4.5282506128243224E-12" />
-      <entry key="M2" value="2.1279686587974737E-6" />
-      <entry key="M5" value="0.00538500475244213" />
-      <entry key="M10" value="0.07338259161710044" />
-      <entry key="M15" value="0.17527851978090403" />
-      <entry key="M30" value="0.4186627757366279" />
-      <entry key="H1" value="0.6470443625863105" />
-      <entry key="H2" value="0.8060676300876803" />
-      <entry key="H4" value="0.9444853743193206" />
-      <entry key="D1" value="5.242353157987109" />
-      <entry key="W1" value="12.776298987213792" />
+      <entry key="MS100" value="3.4516498963690867E-149" />
+      <entry key="MS500" value="2.0321105120776433E-30" />
+      <entry key="S2" value="4.4072710260696995E-8" />
+      <entry key="S5" value="0.0015986867558380727" />
+      <entry key="S10" value="0.055681936020859246" />
+      <entry key="S30" value="0.6040361431164697" />
+      <entry key="S60" value="1.0986367668149086" />
+      <entry key="M2" value="1.4821575335058434" />
+      <entry key="M5" value="1.7786564692569087" />
+      <entry key="M10" value="1.9515538757437922" />
+      <entry key="M15" value="2.0881224863157817" />
+      <entry key="M30" value="2.36844726993429" />
+      <entry key="H1" value="2.6188810750475984" />
+      <entry key="H2" value="2.7909271246211977" />
+      <entry key="H4" value="2.9364598085571356" />
+      <entry key="D1" value="7.238708522726454" />
+      <entry key="W1" value="14.775200733600423" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.9138470112150664" />
-      <entry key="MS500" value="1.226748330166256" />
-      <entry key="S2" value="3.117595563996707" />
-      <entry key="S5" value="4.663370022546825" />
-      <entry key="S10" value="6.331293320096953" />
-      <entry key="S30" value="14.250192549325085" />
-      <entry key="S60" value="21.542109196132607" />
-      <entry key="M2" value="27.516116859358142" />
-      <entry key="M5" value="32.26952203707801" />
-      <entry key="M10" value="34.45406172780598" />
-      <entry key="M15" value="35.77623004196447" />
-      <entry key="M30" value="38.99567143370473" />
-      <entry key="H1" value="43.22830624866463" />
-      <entry key="H2" value="47.14209611782275" />
-      <entry key="H4" value="51.91856075485065" />
-      <entry key="D1" value="116.79940695049191" />
-      <entry key="W1" value="199.03419278260105" />
+      <entry key="MS100" value="1.4952688418639748" />
+      <entry key="MS500" value="3.471512214692836" />
+      <entry key="S2" value="8.08448045982147" />
+      <entry key="S5" value="17.75154433811909" />
+      <entry key="S10" value="33.76966687804077" />
+      <entry key="S30" value="72.50945491426342" />
+      <entry key="S60" value="98.08923751867215" />
+      <entry key="M2" value="119.01182353892783" />
+      <entry key="M5" value="136.43565350151707" />
+      <entry key="M10" value="143.72559549313783" />
+      <entry key="M15" value="146.85539644976373" />
+      <entry key="M30" value="151.93497332106588" />
+      <entry key="H1" value="157.13888064955407" />
+      <entry key="H2" value="161.57094015006044" />
+      <entry key="H4" value="166.6172779252235" />
+      <entry key="D1" value="231.71433686296263" />
+      <entry key="W1" value="314.0157341792924" />
     </decayedShown>
   </component>
   <component name="ProblemsViewState">
@@ -167,32 +167,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "cidr.known.project.marker": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "ml.llm.LLMThirdPartyAiProvidersConfigurable",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;TEXT&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "TEXT"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Docker.Elevate.Auth/Dockerfile">
     <configuration name="Elevate.Auth: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/src/services/Elevate.Auth/Elevate.Auth.csproj" />
@@ -801,7 +802,7 @@
       <workItem from="1782691562431" duration="1563000" />
       <workItem from="1782737189660" duration="50000" />
       <workItem from="1782737254777" duration="23928000" />
-      <workItem from="1783180994776" duration="1566000" />
+      <workItem from="1783180994776" duration="2465000" />
     </task>
     <task id="LOCAL-00001" summary="Add the connectionstring , Edit the docker-compose.yml , Configure the Infrastrcture , The db context and configure its entities">
       <option name="closed" value="true" />
@@ -880,5 +881,9 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
