@@ -14,7 +14,7 @@ public class SearchMealsByTagsQueryHandler : IRequestHandler<SearchMealsByTagsQu
 
     public async Task<Result<PagedResult<MealDto>>> Handle(SearchMealsByTagsQuery query, CancellationToken ct)
     {
-        var q = _repo.SearchByTags(query.Tags);
+        var q = _repo.SearchByTags(query.Tags, query.MinProtein);
 
         var total = await q.CountAsync(ct);
         var items = await q.Skip((query.Page - 1) * query.PageSize).Take(query.PageSize).ToListAsync(ct);

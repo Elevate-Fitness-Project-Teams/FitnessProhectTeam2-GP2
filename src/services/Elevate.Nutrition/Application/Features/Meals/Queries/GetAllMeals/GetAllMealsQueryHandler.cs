@@ -13,7 +13,7 @@ public class GetAllMealsQueryHandler : IRequestHandler<GetAllMealsQuery, Result<
 
     public async Task<Result<PagedResult<MealDto>>> Handle(GetAllMealsQuery query, CancellationToken ct)
     {
-        var paged = await _repo.GetPagedAsync(query.Page, query.PageSize, ct);
+        var paged = await _repo.GetPagedAsync(query.Page, query.PageSize, query.MinProtein, ct);
 
         var dtos = paged.Items.Select(MealDto.FromEntity).ToList();
 

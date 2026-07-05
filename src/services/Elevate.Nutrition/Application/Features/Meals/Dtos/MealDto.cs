@@ -10,6 +10,7 @@ public class MealDto
     public string Ingredients { get; init; } = string.Empty;
     public string Instructions { get; init; } = string.Empty;
     public int Calories { get; init; }
+    public int ProteinGrams { get; init; }
     public string MealType { get; init; } = string.Empty;
     public List<string> Tags { get; init; } = new();
     public DateTime CreatedAt { get; init; }
@@ -23,6 +24,7 @@ public class MealDto
         Ingredients = meal.Ingredients,
         Instructions = meal.Instructions,
         Calories = meal.Calories,
+        ProteinGrams = meal.ProteinGrams,
         MealType = meal.MealType.ToString(),
         Tags = meal.Tags.Select(t => t.ToString()).ToList(),
         CreatedAt = meal.CreatedAt,

@@ -10,6 +10,7 @@ public record CreateMealCommand(
     string Ingredients,
     string Instructions,
     int Calories,
+    int ProteinGrams,
     MealType MealType,
     IEnumerable<MealTag> Tags
 ) : IRequest<Result<int>>;

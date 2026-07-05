@@ -28,6 +28,7 @@ public class UpdateMealCommandHandler : IRequestHandler<UpdateMealCommand, Resul
             command.Ingredients,
             command.Instructions,
             command.Calories,
+            command.ProteinGrams,
             command.MealType,
             command.Tags);
 
