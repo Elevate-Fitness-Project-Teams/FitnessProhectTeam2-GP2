@@ -6,8 +6,9 @@ namespace Elevate.Nutrition.Domain.Interfaces;
 public interface IMealRepository
 {
     Task<Meal?> GetByIdAsync(int id, CancellationToken ct = default);
-    Task<PagedResult<Meal>> GetPagedAsync(int page, int pageSize, int? minProtein = null, CancellationToken ct = default);
-    IQueryable<Meal> SearchByTags(string tags, int? minProtein = null);
+    IQueryable<Meal> GetAllQueryable();
+    Task<PagedResult<Meal>> GetPagedAsync(int page, int pageSize, CancellationToken ct = default);
+    IQueryable<Meal> SearchByTags(string tags);
     void Add(Meal meal);
     void Update(Meal meal);
     void Delete(Meal meal);

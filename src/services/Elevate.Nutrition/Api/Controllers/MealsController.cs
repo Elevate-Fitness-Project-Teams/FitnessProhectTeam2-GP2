@@ -20,9 +20,9 @@ public class MealsController : ControllerBase
     public MealsController(IMediator mediator) => _mediator = mediator;
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] int? minProtein = null)
     {
-        var result = await _mediator.Send(new GetAllMealsQuery());
+        var result = await _mediator.Send(new GetAllMealsQuery(page, pageSize, minProtein));
         return ToActionResult(result);
     }
 
@@ -34,9 +34,9 @@ public class MealsController : ControllerBase
     }
 
     [HttpGet("search")]
-    public async Task<IActionResult> Search([FromQuery] string tags)
+    public async Task<IActionResult> Search([FromQuery] string tags, [FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] int? minProtein = null)
     {
-        var result = await _mediator.Send(new SearchMealsByTagsQuery(tags));
+        var result = await _mediator.Send(new SearchMealsByTagsQuery(tags, page, pageSize, minProtein));
         return ToActionResult(result);
     }
 

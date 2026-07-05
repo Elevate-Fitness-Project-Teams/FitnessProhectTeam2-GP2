@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Elevate.Nutrition.Application.Features.Meals.Dtos;
 using Elevate.Nutrition.Domain.Common;
 using Elevate.Nutrition.Domain.Interfaces;
@@ -13,10 +14,16 @@ public class GetAllMealsQueryHandler : IRequestHandler<GetAllMealsQuery, Result<
 
     public async Task<Result<PagedResult<MealDto>>> Handle(GetAllMealsQuery query, CancellationToken ct)
     {
-        var paged = await _repo.GetPagedAsync(query.Page, query.PageSize, query.MinProtein, ct);
+        var q = _repo.GetAllQueryable();
 
-        var dtos = paged.Items.Select(MealDto.FromEntity).ToList();
+        if (query.MinProtein.HasValue)
+            q = q.Where(m => m.ProteinGrams >= query.MinProtein.Value);
 
-        return Result.Success(new PagedResult<MealDto>(dtos, paged.TotalCount, paged.Page, paged.PageSize));
+        var total = await q.CountAsync(ct);
+        var items = await q.Skip((query.Page - 1) * query.PageSize).Take(query.PageSize).ToListAsync(ct);
+
+        var dtos = items.Select(MealDto.FromEntity).ToList();
+
+        return Result.Success(new PagedResult<MealDto>(dtos, total, query.Page, query.PageSize));
     }
 }

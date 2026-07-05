@@ -44,21 +44,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="207a1b29-003f-4754-9644-b0f73aafac07" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ElevateFitnessApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ElevateFitnessApp/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Commands/CreateMeal/CreateMealCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Commands/CreateMeal/CreateMealCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Commands/CreateMeal/CreateMealCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Commands/CreateMeal/CreateMealCommandHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Commands/CreateMeal/CreateMealCommandValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Commands/CreateMeal/CreateMealCommandValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Commands/UpdateMeal/UpdateMealCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Commands/UpdateMeal/UpdateMealCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Commands/UpdateMeal/UpdateMealCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Commands/UpdateMeal/UpdateMealCommandHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Commands/UpdateMeal/UpdateMealCommandValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Commands/UpdateMeal/UpdateMealCommandValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Dtos/MealDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Dtos/MealDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/GetAllMeals/GetAllMealsQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/GetAllMeals/GetAllMealsQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Api/Controllers/MealsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Api/Controllers/MealsController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/GetAllMeals/GetAllMealsQueryHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/GetAllMeals/GetAllMealsQueryHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/SearchMealsByTags/SearchMealsByTagsQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/SearchMealsByTags/SearchMealsByTagsQuery.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/SearchMealsByTags/SearchMealsByTagsQueryHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Application/Features/Meals/Queries/SearchMealsByTags/SearchMealsByTagsQueryHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Domain/Entities/Meal.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Domain/Entities/Meal.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Domain/Interfaces/IMealRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Domain/Interfaces/IMealRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Infrastructure/Persistence/EntityConfigurations/MealConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Infrastructure/Persistence/EntityConfigurations/MealConfiguration.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Infrastructure/Persistence/Repositories/MealRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Infrastructure/Persistence/Repositories/MealRepository.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -807,7 +796,7 @@
       <workItem from="1782691562431" duration="1563000" />
       <workItem from="1782737189660" duration="50000" />
       <workItem from="1782737254777" duration="23928000" />
-      <workItem from="1783180994776" duration="10994000" />
+      <workItem from="1783180994776" duration="11494000" />
     </task>
     <task id="LOCAL-00001" summary="Add the connectionstring , Edit the docker-compose.yml , Configure the Infrastrcture , The db context and configure its entities">
       <option name="closed" value="true" />
