@@ -106,3 +106,57 @@ services:
 volumes:
   nutrition-db-data:
   sqlserver-db-data:
+  elevate.auth-1:
+    image: elevate.auth-1
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Auth/Dockerfile
+
+  elevate.notifications-1:
+    image: elevate.notifications-1
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Notifications/Dockerfile
+
+  elevate.nutrition:
+    image: elevate.nutrition
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Nutrition/Dockerfile
+
+  elevate.profile-1:
+    image: elevate.profile-1
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Profile/Dockerfile
+
+  elevate.progress-1:
+    image: elevate.progress-1
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Progress/Dockerfile
+
+  elevate.workout-1:
+    image: elevate.workout-1
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Workout/Dockerfile
+
+  elevate.smartcoach-1:
+    image: elevate.smartcoach-1
+    build:
+      context: .
+      dockerfile: src/services/Elevate.smartCoach/Dockerfile
+
+  elevate.subscription-1:
+    image: elevate.subscription-1
+    build:
+      context: .
+      dockerfile: src/services/Elevate.subscription/Dockerfile
+
+  sharedkernel:
+    image: sharedkernel
+    build:
+      context: .
+      dockerfile: SharedKernel/Dockerfile
+
