@@ -1,16 +1,23 @@
-namespace Elevate.Auth.Domain.ValueObjects;
+using SharedKernel;
 
+namespace Elevate.Auth.Domain.ValueObjects;
 
 public sealed record Email
 {
     public string Value { get; }
 
-    public Email(string value)
+    private Email(string value) 
+    {
+        Value = value;
+    }
+
+    public static Result<Email> Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("Email cannot be empty.", nameof(value));
+            return Result.Failure<Email>(new Error("AUTH_EMAIL_REQUIRED", "Email cannot be empty.", ErrorType.Validation));
 
-        Value = value.Trim().ToLowerInvariant();
+        var processedValue = value.Trim().ToLowerInvariant();
+        return Result.Success(new Email(processedValue));
     }
 
     public static implicit operator string(Email e) => e.Value;
