@@ -21,7 +21,7 @@ public sealed class AppUser
     public DateTime CreatedAt { get; private set; }
 
     public DateTime? UpdatedAt { get; private set; }
-
+    public DateTime? LastLoginAt { get; private set; }
     private readonly List<LoginAttempt> _loginAttempts = [];
 
     private readonly List<RefreshToken> _refreshTokens = [];
@@ -85,26 +85,22 @@ public sealed class AppUser
     }
     public bool IsCurrentlyLockedOut(DateTime now) =>
         IsLockedOut && LockedUntil.HasValue && LockedUntil.Value > now;
-    public LoginAttemptResult EvaluateLockout(
-       bool passwordCorrect,
-       IReadOnlyList<LoginAttempt> recentAttempts,
-       DateTime now)
+    public LoginAttemptResult EvaluateLockout(bool success, DateTime now)
     {
-        if (passwordCorrect)
+        if (success)
         {
             IsLockedOut = false;
             LockedUntil = null;
-            UpdatedAt = now;
             return LoginAttemptResult.Success;
         }
 
-        var failuresInWindow = recentAttempts.Count(a => !a.IsSuccess);
+        var windowStart = now.AddMinutes(-15);
+        var recentFailures = _loginAttempts.Count(a => !a.IsSuccess && a.AttemptedAt >= windowStart);
 
-        if (failuresInWindow + 1 >= 5)
+        if (recentFailures >= 5)
         {
             IsLockedOut = true;
             LockedUntil = now.AddMinutes(15);
-            UpdatedAt = now;
             AddDomainEvent(new UserLockedOutEvent(Id, LockedUntil.Value, now));
             return LoginAttemptResult.LockedOut;
         }
@@ -114,6 +110,14 @@ public sealed class AppUser
 
     private void AddDomainEvent(IDomainEvent domainEvent)
         => _domainEvents.Add(domainEvent);
+    public void RecordSuccessfulLogin(string refreshTokenHash, DateTime expiry, DateTime now)
+    {
+        LastLoginAt = now;
+        UpdatedAt = now;
+
+        var token = RefreshToken.Create(Id, refreshTokenHash, expiry, now);
+        _refreshTokens.Add(token);
+    }
     public void ResetPassword(DateTime now)
     {
         // PasswordHash is set by UserManager before this is called
