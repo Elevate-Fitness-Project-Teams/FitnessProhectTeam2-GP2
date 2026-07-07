@@ -1,9 +1,5 @@
-﻿using Elevate.Workout.Infrastructure.Persistence;
-using Elevate.Workout.Infrastructure.Presistence;
-using Microsoft.AspNetCore.Builder;
+﻿using Elevate.Workout.Infrastructure.Presistence;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System;
 
 namespace Elevate.Workout.Infrastructure.Persistence;

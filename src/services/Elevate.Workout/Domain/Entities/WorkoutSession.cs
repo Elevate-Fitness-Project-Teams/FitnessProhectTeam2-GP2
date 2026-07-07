@@ -20,7 +20,6 @@ public sealed class WorkoutSession
     // Read-only navigation property exposing the encapsulated exercises list safely
     public IReadOnlyCollection<WorkoutExercise> Exercises => _exercises.AsReadOnly();
 
-    // Factory Method to handle controlled creation of a valid domain entity instance
     public static WorkoutSession Create(Guid userId, string name, string type, int duration, int calories, DateTime createdAt)
     {
         return new WorkoutSession
@@ -35,12 +34,10 @@ public sealed class WorkoutSession
         };
     }
 
-    // Domain Business Action: Safely append a new exercise to this specific workout session
     public void AddExercise(string exerciseName, int order)
     {
         var exercise = WorkoutExercise.Create(Id, exerciseName, order);
         _exercises.Add(exercise);
 
-        // Audit log or domain event logic could be dispatched here in the future
     }
 }

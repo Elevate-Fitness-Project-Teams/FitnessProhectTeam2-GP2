@@ -1,11 +1,12 @@
 ﻿using Elevate.Workout.Domain.Entities;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Elevate.Workout.Infrastructure.Presistence
 {
-    public class WorkOutDbContext : DbContext
+    public class WorkOutDbContext : BaseDbContext
     {
-        public WorkOutDbContext(DbContextOptions<WorkOutDbContext> options) : base(options)
+        public WorkOutDbContext(DbContextOptions<WorkOutDbContext> options, IMediator mediator) : base(options, mediator)
         {
         }
 
@@ -20,10 +21,6 @@ namespace Elevate.Workout.Infrastructure.Presistence
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(WorkOutDbContext).Assembly);
         }
 
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            // Place for Auditing or Domain Events Dispatcher invocation before committing transactions
-            return await base.SaveChangesAsync(cancellationToken);
-        }
+        
     }
 }
