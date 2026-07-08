@@ -28,7 +28,11 @@ public static class DependencyInjection
 
         var fceBaseUrl = config["Services:FceApi:BaseUrl"];
 
-        if (!string.IsNullOrWhiteSpace(fceBaseUrl))
+        if (string.IsNullOrWhiteSpace(fceBaseUrl))
+        {
+            services.AddScoped<IFceIntegrationService, NullFceIntegrationService>();
+        }
+        else
         {
             services.AddHttpClient<IFceIntegrationService, FceIntegrationService>(client =>
             {

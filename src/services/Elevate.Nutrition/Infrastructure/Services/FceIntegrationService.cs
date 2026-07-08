@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http.Json;
 using Elevate.Nutrition.Application.Features.MealPlans.Dtos;
 using Elevate.Nutrition.Application.Interfaces;
@@ -15,7 +16,12 @@ public class FceIntegrationService : IFceIntegrationService
         var response = await _httpClient.GetAsync($"/api/calorie-target/{userId}", ct);
 
         if (!response.IsSuccessStatusCode)
-            return null;
+        {
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return null;
+
+            response.EnsureSuccessStatusCode();
+        }
 
         var envelope = await response.Content.ReadFromJsonAsync<FceResponse>(cancellationToken: ct);
 

@@ -35,19 +35,14 @@ public class CreateMealPlanFromTargetCommandHandler : IRequestHandler<CreateMeal
         {
             return Result.Failure<int>("Calorie target service unavailable");
         }
-        catch (TaskCanceledException)
-        {
-            return Result.Failure<int>("Calorie target service timed out");
-        }
 
         if (target is null)
             return Result.Failure<int>($"Calorie target not found for user {command.UserId}", ErrorType.NotFound);
 
         var buffer = 200;
-        var mealPlan = new MealPlan(
-            target.TargetCalories - buffer,
-            target.TargetCalories + buffer,
-            command.Goal);
+        var minRange = Math.Max(0, target.TargetCalories - buffer);
+        var maxRange = target.TargetCalories + buffer;
+        var mealPlan = new MealPlan(minRange, maxRange, command.Goal);
 
         _repo.Add(mealPlan);
         await _uow.SaveChangesAsync(ct);
