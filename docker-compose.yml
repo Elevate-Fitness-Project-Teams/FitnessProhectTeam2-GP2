@@ -55,6 +55,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__NutritionDb=server=nutrition-db;port=3306;database=nutrition;user=nutrition_user;password=nutrition_pass;CharSet=utf8mb4
+      - Services__FceApi__BaseUrl=http://elevate.fitnesscalculation:8080
 
   elevate.fitnesscalculation:
     image: elevate.fitnesscalculation

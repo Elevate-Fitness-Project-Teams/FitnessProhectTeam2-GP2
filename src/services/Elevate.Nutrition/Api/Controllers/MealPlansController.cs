@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Elevate.Nutrition.Api.Dtos.Responses;
 using Elevate.Nutrition.Application.Features.MealPlans.Commands.AddMealPlanItem;
 using Elevate.Nutrition.Application.Features.MealPlans.Commands.CreateMealPlan;
+using Elevate.Nutrition.Application.Features.MealPlans.Commands.CreateMealPlanFromTarget;
 using Elevate.Nutrition.Application.Features.MealPlans.Commands.DeleteMealPlan;
 using Elevate.Nutrition.Application.Features.MealPlans.Commands.RemoveMealPlanItem;
 using Elevate.Nutrition.Application.Features.MealPlans.Commands.UpdateMealPlan;
@@ -61,6 +62,21 @@ public class MealPlansController : ControllerBase
     {
         var result = await _mediator.Send(new DeleteMealPlanCommand(id));
         return ToActionResult(result);
+    }
+
+    [HttpPost("from-target/{userId:int}")]
+    public async Task<IActionResult> CreateFromTarget(int userId, [FromBody] CreateMealPlanFromTargetCommand command)
+    {
+        if (userId != command.UserId)
+            return BadRequest(ApiEnvelope.Failure(new List<string> { "Route userId and body UserId mismatch" }));
+
+        var result = await _mediator.Send(command);
+
+        if (!result.IsSuccess)
+            return ToActionResult(result);
+
+        return CreatedAtAction(nameof(GetById), new { id = ((Result<int>)result).Value },
+            ApiEnvelope.FromResult(result));
     }
 
     [HttpPost("{id:int}/items")]
