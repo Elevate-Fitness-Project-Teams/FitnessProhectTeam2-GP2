@@ -47,8 +47,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ElevateFitnessApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ElevateFitnessApp/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Api/Controllers/MealPlansController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Api/Controllers/MealPlansController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Infrastructure/DependencyInjection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Infrastructure/DependencyInjection.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Api/Controllers/MealsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Api/Controllers/MealsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Elevate.Nutrition.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Elevate.Nutrition.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Elevate.Nutrition/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -797,7 +798,7 @@
       <workItem from="1782737189660" duration="50000" />
       <workItem from="1782737254777" duration="23928000" />
       <workItem from="1783180994776" duration="11494000" />
-      <workItem from="1783502707780" duration="1411000" />
+      <workItem from="1783502707780" duration="4853000" />
     </task>
     <task id="LOCAL-00001" summary="Add the connectionstring , Edit the docker-compose.yml , Configure the Infrastrcture , The db context and configure its entities">
       <option name="closed" value="true" />

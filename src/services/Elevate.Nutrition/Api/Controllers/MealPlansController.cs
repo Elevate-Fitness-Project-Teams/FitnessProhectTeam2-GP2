@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Elevate.Nutrition.Api.Dtos.Responses;
 using Elevate.Nutrition.Application.Features.MealPlans.Commands.AddMealPlanItem;
@@ -15,6 +16,7 @@ namespace Elevate.Nutrition.Api.Controllers;
 
 [Route("api/nutrition/mealplans")]
 [ApiController]
+[Authorize]
 public class MealPlansController : ControllerBase
 {
     private readonly IMediator _mediator;
