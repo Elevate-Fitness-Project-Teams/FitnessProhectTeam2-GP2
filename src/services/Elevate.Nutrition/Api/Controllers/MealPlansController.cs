@@ -1,8 +1,10 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Elevate.Nutrition.Api.Dtos.Responses;
 using Elevate.Nutrition.Application.Features.MealPlans.Commands.AddMealPlanItem;
 using Elevate.Nutrition.Application.Features.MealPlans.Commands.CreateMealPlan;
+using Elevate.Nutrition.Application.Features.MealPlans.Commands.CreateMealPlanFromTarget;
 using Elevate.Nutrition.Application.Features.MealPlans.Commands.DeleteMealPlan;
 using Elevate.Nutrition.Application.Features.MealPlans.Commands.RemoveMealPlanItem;
 using Elevate.Nutrition.Application.Features.MealPlans.Commands.UpdateMealPlan;
@@ -14,6 +16,7 @@ namespace Elevate.Nutrition.Api.Controllers;
 
 [Route("api/nutrition/mealplans")]
 [ApiController]
+[Authorize]
 public class MealPlansController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -63,6 +66,21 @@ public class MealPlansController : ControllerBase
         return ToActionResult(result);
     }
 
+    [HttpPost("from-target/{userId:int}")]
+    public async Task<IActionResult> CreateFromTarget(int userId, [FromBody] CreateMealPlanFromTargetCommand command)
+    {
+        if (userId != command.UserId)
+            return BadRequest(ApiEnvelope.Failure(new List<string> { "Route userId and body UserId mismatch" }));
+
+        var result = await _mediator.Send(command);
+
+        if (!result.IsSuccess)
+            return ToActionResult(result);
+
+        return CreatedAtAction(nameof(GetById), new { id = ((Result<int>)result).Value },
+            ApiEnvelope.FromResult(result));
+    }
+
     [HttpPost("{id:int}/items")]
     public async Task<IActionResult> AddItem(int id, [FromBody] AddMealPlanItemCommand command)
     {
@@ -85,7 +103,7 @@ public class MealPlansController : ControllerBase
         if (result.IsSuccess)
             return Ok(ApiEnvelope.FromResult(result));
 
-        if (result.Error?.Contains("not found") ?? false)
+        if (result.ErrorType is ErrorType.NotFound)
             return NotFound(ApiEnvelope.FromResult(result));
 
         return BadRequest(ApiEnvelope.FromResult(result));

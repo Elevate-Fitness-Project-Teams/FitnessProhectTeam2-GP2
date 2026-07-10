@@ -24,6 +24,7 @@
     <Folder Include="Api\MiddleWares\" />
     <Folder Include="Application\Features\Profiles\Commands\" />
     <Folder Include="Domain\Exceptions\" />
+    <ProjectReference Include="..\..\..\SharedKernel\SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

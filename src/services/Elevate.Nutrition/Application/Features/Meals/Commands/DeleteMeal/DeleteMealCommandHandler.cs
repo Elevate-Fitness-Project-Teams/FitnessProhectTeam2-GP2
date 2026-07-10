@@ -20,7 +20,7 @@ public class DeleteMealCommandHandler : IRequestHandler<DeleteMealCommand, Resul
         var meal = await _repo.GetByIdAsync(command.Id, ct);
 
         if (meal is null)
-            return Result.Failure("Meal not found");
+            return Result.Failure("Meal not found", ErrorType.NotFound);
 
         _repo.Delete(meal);
         await _uow.SaveChangesAsync(ct);

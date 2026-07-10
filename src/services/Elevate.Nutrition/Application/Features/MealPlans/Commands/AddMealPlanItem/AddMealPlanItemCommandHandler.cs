@@ -25,11 +25,11 @@ public class AddMealPlanItemCommandHandler : IRequestHandler<AddMealPlanItemComm
     {
         var mealPlan = await _mealPlanRepo.GetByIdAsync(command.MealPlanId, ct);
         if (mealPlan is null)
-            return Result.Failure("MealPlan not found");
+            return Result.Failure("MealPlan not found", ErrorType.NotFound);
 
         var meal = await _mealRepo.GetByIdAsync(command.MealId, ct);
         if (meal is null)
-            return Result.Failure("Meal not found");
+            return Result.Failure("Meal not found", ErrorType.NotFound);
 
         var item = new MealPlanItem(command.MealId, command.ServingCount);
         mealPlan.AddItem(item);

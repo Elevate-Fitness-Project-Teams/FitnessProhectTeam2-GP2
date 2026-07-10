@@ -18,6 +18,7 @@ public class MealConfiguration : IEntityTypeConfiguration<Meal>
         builder.Property(m => m.Ingredients).IsRequired().HasMaxLength(4000);
         builder.Property(m => m.Instructions).HasMaxLength(4000);
         builder.Property(m => m.Calories).IsRequired();
+        builder.Property(m => m.ProteinGrams).IsRequired();
 
         builder.Property(m => m.MealType)
             .HasConversion<string>()

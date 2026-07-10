@@ -20,7 +20,7 @@ public class UpdateMealPlanCommandHandler : IRequestHandler<UpdateMealPlanComman
         var mealPlan = await _repo.GetByIdAsync(command.Id, ct);
 
         if (mealPlan is null)
-            return Result.Failure("MealPlan not found");
+            return Result.Failure("MealPlan not found", ErrorType.NotFound);
 
         mealPlan.UpdateCalorieRange(command.TargetCalorieRangeMin, command.TargetCalorieRangeMax);
         mealPlan.UpdateGoal(command.Goal);

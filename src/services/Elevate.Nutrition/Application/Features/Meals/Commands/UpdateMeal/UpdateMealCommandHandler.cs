@@ -20,7 +20,7 @@ public class UpdateMealCommandHandler : IRequestHandler<UpdateMealCommand, Resul
         var meal = await _repo.GetByIdAsync(command.Id, ct);
 
         if (meal is null)
-            return Result.Failure("Meal not found");
+            return Result.Failure("Meal not found", ErrorType.NotFound);
 
         meal.Update(
             command.Name,
@@ -28,6 +28,7 @@ public class UpdateMealCommandHandler : IRequestHandler<UpdateMealCommand, Resul
             command.Ingredients,
             command.Instructions,
             command.Calories,
+            command.ProteinGrams,
             command.MealType,
             command.Tags);
 

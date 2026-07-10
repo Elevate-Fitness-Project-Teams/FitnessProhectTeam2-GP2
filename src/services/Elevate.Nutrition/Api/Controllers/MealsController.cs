@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Elevate.Nutrition.Api.Dtos.Responses;
 using Elevate.Nutrition.Application.Features.Meals.Commands.CreateMeal;
@@ -13,6 +14,7 @@ namespace Elevate.Nutrition.Api.Controllers;
 
 [Route("api/nutrition/meals")]
 [ApiController]
+[Authorize]
 public class MealsController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -20,9 +22,9 @@ public class MealsController : ControllerBase
     public MealsController(IMediator mediator) => _mediator = mediator;
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] int? minProtein = null)
     {
-        var result = await _mediator.Send(new GetAllMealsQuery());
+        var result = await _mediator.Send(new GetAllMealsQuery(page, pageSize, minProtein));
         return ToActionResult(result);
     }
 
@@ -34,9 +36,9 @@ public class MealsController : ControllerBase
     }
 
     [HttpGet("search")]
-    public async Task<IActionResult> Search([FromQuery] string tags)
+    public async Task<IActionResult> Search([FromQuery] string tags, [FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] int? minProtein = null)
     {
-        var result = await _mediator.Send(new SearchMealsByTagsQuery(tags));
+        var result = await _mediator.Send(new SearchMealsByTagsQuery(tags, page, pageSize, minProtein));
         return ToActionResult(result);
     }
 
@@ -74,7 +76,7 @@ public class MealsController : ControllerBase
         if (result.IsSuccess)
             return Ok(ApiEnvelope.FromResult(result));
 
-        if (result.Error?.Contains("not found") ?? false)
+        if (result.ErrorType is ErrorType.NotFound)
             return NotFound(ApiEnvelope.FromResult(result));
 
         return BadRequest(ApiEnvelope.FromResult(result));

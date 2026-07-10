@@ -1,7 +1,6 @@
 ﻿namespace Elevate.Auth.Domain.Entities;
 
-/// Tracks every login attempt for the 5-failure / 15-minute lockout rule (Spec 1.3).
-/// Created only via User.RecordLoginAttempt() — never instantiated directly.
+
 public class LoginAttempt
 {
     public Guid Id { get; private set; }
