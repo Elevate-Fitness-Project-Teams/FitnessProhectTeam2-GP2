@@ -1,4 +1,3 @@
-
 services:
   sqlserver-db:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -32,19 +31,23 @@ services:
       timeout: 5s
       retries: 5
 
-  # --- Microservices ---
+  # --- Auth Microservice ---
   elevate.auth:
     build:
       context: .
       dockerfile: src/services/Elevate.Auth/Dockerfile
+    image: elevate.auth
     container_name: elevate-auth-api
     restart: unless-stopped
     ports:
       - "5007:8080"
+
+  # --- Nutrition Microservice ---
   nutrition-api:
     build:
       context: .
       dockerfile: src/services/Elevate.Nutrition/Dockerfile
+    image: elevate.nutrition
     container_name: elevate-nutrition-api
     restart: unless-stopped
     ports:
@@ -91,6 +94,7 @@ services:
       dockerfile: src/services/Elevate.Workout/Dockerfile
 
   elevate.smartcoach:
+    image: elevate.smartcoach
     build:
       context: .
       dockerfile: src/services/Elevate.smartCoach/Dockerfile
@@ -107,6 +111,8 @@ services:
   
 
 volumes:
+  sqlserver-db-data:
+  nutrition-db-data:
   nutrition-db-data:
   sqlserver-db-data:
  

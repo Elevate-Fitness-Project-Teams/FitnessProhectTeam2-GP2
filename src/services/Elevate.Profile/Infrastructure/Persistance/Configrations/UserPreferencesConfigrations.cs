@@ -11,7 +11,7 @@ namespace Elevate.Profile.Infrastructure.Persistance.Configrations
         {
             builder.HasKey(up => up.UserId);
             builder.HasOne(up => up.UserProfile)
-                    .WithOne(up => up.UserPreferences)
+                    .WithOne(up => up.Preferences)
                     .HasForeignKey<UserPreferences>(up => up.UserId);
 
 

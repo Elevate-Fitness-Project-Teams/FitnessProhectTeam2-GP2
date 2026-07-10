@@ -4,16 +4,19 @@ using Elevate.Profile.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Elevate.Profile.Infrastructure.Persistance.Migrations
+namespace Elevate.Profile.Infrastructure.Migrations
 {
     [DbContext(typeof(ProfileDbContext))]
-    partial class ProfileDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260710000547_ProfileIntialCreation")]
+    partial class ProfileIntialCreation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,13 +25,10 @@ namespace Elevate.Profile.Infrastructure.Persistance.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Elevate.Profile.Domain.NotificationSettings", b =>
+            modelBuilder.Entity("Elevate.Profile.Domain.Entities.NotificationSettings", b =>
                 {
                     b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<bool>("AchievementAlerts")
                         .HasColumnType("bit");
@@ -53,7 +53,7 @@ namespace Elevate.Profile.Infrastructure.Persistance.Migrations
                     b.ToTable("NotificationSettings");
                 });
 
-            modelBuilder.Entity("Elevate.Profile.Domain.PrivacySettings", b =>
+            modelBuilder.Entity("Elevate.Profile.Domain.Entities.PrivacySettings", b =>
                 {
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -73,7 +73,7 @@ namespace Elevate.Profile.Infrastructure.Persistance.Migrations
                     b.ToTable("PrivacySettings");
                 });
 
-            modelBuilder.Entity("Elevate.Profile.Domain.UserPreferences", b =>
+            modelBuilder.Entity("Elevate.Profile.Domain.Entities.UserPreferences", b =>
                 {
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -108,28 +108,13 @@ namespace Elevate.Profile.Infrastructure.Persistance.Migrations
                     b.ToTable("UserPreferences");
                 });
 
-            modelBuilder.Entity("Elevate.Profile.Domain.UserProfile", b =>
+            modelBuilder.Entity("Elevate.Profile.Domain.Entities.UserProfile", b =>
                 {
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<bool>("IsPremiumCached")
                         .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("MemberSince")
                         .HasColumnType("datetime2");
@@ -147,51 +132,101 @@ namespace Elevate.Profile.Infrastructure.Persistance.Migrations
                     b.ToTable("UsersProfile");
                 });
 
-            modelBuilder.Entity("Elevate.Profile.Domain.PrivacySettings", b =>
+            modelBuilder.Entity("Elevate.Profile.Domain.Entities.NotificationSettings", b =>
                 {
-                    b.HasOne("Elevate.Profile.Domain.UserProfile", "UserProfile")
+                    b.HasOne("Elevate.Profile.Domain.Entities.UserProfile", "UserProfile")
+                        .WithOne("NotificationSettings")
+                        .HasForeignKey("Elevate.Profile.Domain.Entities.NotificationSettings", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("Elevate.Profile.Domain.Entities.PrivacySettings", b =>
+                {
+                    b.HasOne("Elevate.Profile.Domain.Entities.UserProfile", "UserProfile")
                         .WithOne("PrivacySettings")
-                        .HasForeignKey("Elevate.Profile.Domain.PrivacySettings", "UserId")
+                        .HasForeignKey("Elevate.Profile.Domain.Entities.PrivacySettings", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("UserProfile");
                 });
 
-            modelBuilder.Entity("Elevate.Profile.Domain.UserPreferences", b =>
+            modelBuilder.Entity("Elevate.Profile.Domain.Entities.UserPreferences", b =>
                 {
-                    b.HasOne("Elevate.Profile.Domain.UserProfile", "UserProfile")
-                        .WithOne("UserPreferences")
-                        .HasForeignKey("Elevate.Profile.Domain.UserPreferences", "UserId")
+                    b.HasOne("Elevate.Profile.Domain.Entities.UserProfile", "UserProfile")
+                        .WithOne("Preferences")
+                        .HasForeignKey("Elevate.Profile.Domain.Entities.UserPreferences", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("UserProfile");
                 });
 
-            modelBuilder.Entity("Elevate.Profile.Domain.UserProfile", b =>
+            modelBuilder.Entity("Elevate.Profile.Domain.Entities.UserProfile", b =>
                 {
-                    b.HasOne("Elevate.Profile.Domain.NotificationSettings", "NotificationSettings")
-                        .WithOne("UserProfile")
-                        .HasForeignKey("Elevate.Profile.Domain.UserProfile", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.OwnsOne("Elevate.Profile.Domain.ValueObjects.Email", "Email", b1 =>
+                        {
+                            b1.Property<int>("UserProfileUserId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)")
+                                .HasColumnName("Email");
+
+                            b1.HasKey("UserProfileUserId");
+
+                            b1.ToTable("UsersProfile");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserProfileUserId");
+                        });
+
+                    b.OwnsOne("Elevate.Profile.Domain.ValueObjects.FullName", "Name", b1 =>
+                        {
+                            b1.Property<int>("UserProfileUserId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("FirstName")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)")
+                                .HasColumnName("FirstName");
+
+                            b1.Property<string>("LastName")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)")
+                                .HasColumnName("LastName");
+
+                            b1.HasKey("UserProfileUserId");
+
+                            b1.ToTable("UsersProfile");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserProfileUserId");
+                        });
+
+                    b.Navigation("Email")
                         .IsRequired();
 
-                    b.Navigation("NotificationSettings");
-                });
-
-            modelBuilder.Entity("Elevate.Profile.Domain.NotificationSettings", b =>
-                {
-                    b.Navigation("UserProfile")
+                    b.Navigation("Name")
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Elevate.Profile.Domain.UserProfile", b =>
+            modelBuilder.Entity("Elevate.Profile.Domain.Entities.UserProfile", b =>
                 {
+                    b.Navigation("NotificationSettings")
+                        .IsRequired();
+
+                    b.Navigation("Preferences")
+                        .IsRequired();
+
                     b.Navigation("PrivacySettings")
-                        .IsRequired();
-
-                    b.Navigation("UserPreferences")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

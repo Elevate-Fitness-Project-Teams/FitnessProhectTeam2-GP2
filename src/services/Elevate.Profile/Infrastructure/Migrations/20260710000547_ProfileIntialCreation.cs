@@ -3,20 +3,37 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Elevate.Profile.Infrastructure.Persistance.Migrations
+namespace Elevate.Profile.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class intialcreation : Migration
+    public partial class ProfileIntialCreation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "UsersProfile",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    ProfilePictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsPremiumCached = table.Column<bool>(type: "bit", nullable: false),
+                    MemberSince = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UsersProfile", x => x.UserId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "NotificationSettings",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     WorkoutReminders = table.Column<bool>(type: "bit", nullable: false),
                     MealReminders = table.Column<bool>(type: "bit", nullable: false),
                     AchievementAlerts = table.Column<bool>(type: "bit", nullable: false),
@@ -27,28 +44,10 @@ namespace Elevate.Profile.Infrastructure.Persistance.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_NotificationSettings", x => x.UserId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UsersProfile",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    IsPremiumCached = table.Column<bool>(type: "bit", nullable: false),
-                    ProfilePictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MemberSince = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UsersProfile", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_UsersProfile_NotificationSettings_UserId",
+                        name: "FK_NotificationSettings_UsersProfile_UserId",
                         column: x => x.UserId,
-                        principalTable: "NotificationSettings",
+                        principalTable: "UsersProfile",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -100,6 +99,9 @@ namespace Elevate.Profile.Infrastructure.Persistance.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "NotificationSettings");
+
+            migrationBuilder.DropTable(
                 name: "PrivacySettings");
 
             migrationBuilder.DropTable(
@@ -107,9 +109,6 @@ namespace Elevate.Profile.Infrastructure.Persistance.Migrations
 
             migrationBuilder.DropTable(
                 name: "UsersProfile");
-
-            migrationBuilder.DropTable(
-                name: "NotificationSettings");
         }
     }
 }
