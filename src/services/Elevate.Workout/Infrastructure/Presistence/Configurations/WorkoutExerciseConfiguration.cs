@@ -10,19 +10,10 @@ namespace Elevate.Workout.Infrastructure.Presistence.Configurations
         {
             builder.ToTable("WorkoutExercises");
 
-            builder.HasKey(x => x.Id);
+            builder.HasKey(e => e.Id);
+            builder.Property(e => e.Id).UseIdentityColumn();
 
-            builder.Property(x => x.ExerciseName)
-                .IsRequired()
-                .HasMaxLength(100);
-
-            builder.HasMany(x => x.Sets)
-                .WithOne()
-                .HasForeignKey(x => x.WorkoutExerciseId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Metadata.FindNavigation(nameof(WorkoutExercise.Sets))?
-                .SetPropertyAccessMode(PropertyAccessMode.Field);
+           
         }
     }
 }

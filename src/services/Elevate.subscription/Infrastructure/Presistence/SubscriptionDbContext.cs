@@ -22,5 +22,5 @@ public sealed class SubscriptionDbContext : BaseDbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(SubscriptionDbContext).Assembly);
     }
 
-    
+
 }
