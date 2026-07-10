@@ -22,14 +22,14 @@ namespace Elevate.Profile.Domain.Entities
 
         public NotificationSettings NotificationSettings { get; private set; } 
 
-        public PrivacySettings PrivacySettings { get; private set; } 
+        public PrivacySettings PrivacySettings { get; private set; }
 
-        public UserProfile()
+        private UserProfile()
         {
-            
+            // Required by EF Core
         }
 
-        public UserProfile(
+        private UserProfile(
             int userId, 
             FullName name, 
             Email email, 
@@ -42,11 +42,53 @@ namespace Elevate.Profile.Domain.Entities
             Email = email;
             PhoneNumber = phoneNumber;
             ProfilePictureUrl = profilePictureUrl;
-          
-            MemberSince = DateTime.UtcNow;
-            //Preferences = preferences;
-            //NotificationSettings = notificationSettings;
-            //PrivacySettings = privacySettings;
+            MemberSince = DateTime.UtcNow;  
         }
+
+        public static UserProfile Create(
+        int userId,
+        FullName name,
+        Email email,
+        string phoneNumber,
+        string? profilePictureUrl)
+         {
+                return new UserProfile(
+                    userId,
+                    name,
+                    email,
+                    phoneNumber,
+                    profilePictureUrl);
+            }
+
+        public void UpdateProfile(
+            FullName name, 
+            Email email, 
+            string phoneNumber, 
+            string? profilePictureUrl
+        )
+        {
+            Name = name;
+            Email = email;
+            PhoneNumber = phoneNumber;
+            ProfilePictureUrl = profilePictureUrl;
+        }
+
+        public void UpdatePreferences(UserPreferences preferences)
+        {
+            Preferences = preferences;
+        }
+
+        public void UpdateNotificationSettings(NotificationSettings notificationSettings)
+        {
+            NotificationSettings = notificationSettings;
+        }
+
+        public void UpdatePrivacySettings(PrivacySettings privacySettings)
+        {
+            PrivacySettings = privacySettings;
+        }
+
+
+
     }
 }
