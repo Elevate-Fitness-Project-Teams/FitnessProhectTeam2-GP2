@@ -1,3 +1,6 @@
+using Elevate.Progress.Infrastructure.Persistence;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Elevate.Progress
 {
@@ -7,16 +10,26 @@ namespace Elevate.Progress
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
+            // Controllers
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+            // Swagger
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            // MediatR
+            builder.Services.AddMediatR(typeof(Program).Assembly);
+
+            // Progress Database
+            builder.Services.AddDbContext<ProgressDbContext>(options =>
+                options.UseMySql(
+                    builder.Configuration.GetConnectionString("DefaultConnection"),
+                    ServerVersion.AutoDetect(
+                        builder.Configuration.GetConnectionString("DefaultConnection"))));
+
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            // Swagger
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -25,8 +38,10 @@ namespace Elevate.Progress
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            
+             app.UseAuthentication();
 
+            app.UseAuthorization();
 
             app.MapControllers();
 
