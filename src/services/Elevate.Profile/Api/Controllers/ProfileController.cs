@@ -1,6 +1,7 @@
 ﻿using Elevate.Profile.Application.Features.Profile.Queries;
 using Elevate.Profile.Application.Features.Profiles.Commands;
 using Elevate.Profile.Application.Features.Profiles.UpdatePasswords;
+using Elevate.Profile.Application.Features.Profiles.UpdateSettings;
 using Elevate.Profile.Application.Features.Profiles.viewSettingss;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -48,5 +49,15 @@ namespace Elevate.Profile.Api.Controllers
             var result = await _mediator.Send(new ViewSettingsQuery(), cancellationToken);
             return Ok(result);
         }
+
+        [HttpPut("settings")]
+        public async Task<IActionResult> UpdateSettings(
+                    [FromBody] updateSettingsCommand command,
+                    CancellationToken cancellationToken)
+        {
+            await _mediator.Send(command, cancellationToken);
+            return Ok();
+        }
+
     }
 }

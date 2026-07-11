@@ -88,7 +88,5 @@ namespace Elevate.Profile.Domain.Entities
             PrivacySettings = privacySettings;
         }
 
-
-
     }
 }
