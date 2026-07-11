@@ -1,8 +1,10 @@
 
 using Elevate.Profile.Api.Extensions;
 using Elevate.Profile.Application.Common;
+using Elevate.Profile.Domain.Interfaces;
 using Elevate.Profile.Infrastructure;
 using Elevate.Profile.Infrastructure.Authentication;
+using Elevate.Profile.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Elevate.Profile
@@ -29,6 +31,8 @@ namespace Elevate.Profile
             builder.Services.AddScoped<ICurrentUserInitializer, CurrentUser>(x => x.GetRequiredService<CurrentUser>());
             builder.Services.AddScoped<ICurrentUser, CurrentUser>(x => x.GetRequiredService<CurrentUser>());
 
+            builder.Services.AddScoped(typeof(IGeneralRepository<>), typeof(GeneralRepository<>));
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var app = builder.Build();
 
