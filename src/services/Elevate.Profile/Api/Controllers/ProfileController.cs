@@ -3,6 +3,7 @@ using Elevate.Profile.Application.Features.Profiles.Commands;
 using Elevate.Profile.Application.Features.Profiles.UpdatePasswords;
 using Elevate.Profile.Application.Features.Profiles.UpdatePhoto;
 using Elevate.Profile.Application.Features.Profiles.UpdateSettings;
+using Elevate.Profile.Application.Features.Profiles.UploadPhoto;
 using Elevate.Profile.Application.Features.Profiles.viewSettingss;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -60,9 +61,12 @@ namespace Elevate.Profile.Api.Controllers
             return Ok();
         }
         [HttpPost("picture")]
-        public async Task<IActionResult> UploadPhoto([FromForm] IFormFile picture, CancellationToken cancellationToken)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UploadPhoto(
+                            [FromForm] UploadPhotoCommand command,
+                            CancellationToken cancellationToken)
         {
-            await _mediator.Send(picture, cancellationToken);
+            await _mediator.Send(command, cancellationToken);
             return Ok();
         }
     }
