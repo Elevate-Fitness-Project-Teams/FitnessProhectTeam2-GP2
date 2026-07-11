@@ -16,6 +16,7 @@ namespace Elevate.Profile.Api.Controllers
         public ProfileController(IMediator mediator)
         {
             _mediator = mediator;
+
         }
 
         [HttpGet]

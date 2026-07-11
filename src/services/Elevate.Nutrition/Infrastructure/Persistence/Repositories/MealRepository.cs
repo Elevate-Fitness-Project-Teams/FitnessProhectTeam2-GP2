@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Elevate.Nutrition.Domain.Common;
 using Elevate.Nutrition.Domain.Entities;
 using Elevate.Nutrition.Domain.Interfaces;
 
@@ -13,13 +14,21 @@ public class MealRepository : IMealRepository
     public async Task<Meal?> GetByIdAsync(int id, CancellationToken ct = default)
         => await _db.Meals.FindAsync(new object[] { id }, ct);
 
-    public async Task<IEnumerable<Meal>> GetAllAsync(CancellationToken ct = default)
-        => await _db.Meals.AsNoTracking().ToListAsync(ct);
+    public IQueryable<Meal> GetAllQueryable()
+        => _db.Meals.AsNoTracking();
 
-    public async Task<IEnumerable<Meal>> SearchByTagsAsync(string tags, CancellationToken ct = default)
-        => await _db.Meals.AsNoTracking()
-             .Where(m => EF.Property<string>(m, "_tagsCsv").Contains(tags))
-             .ToListAsync(ct);
+    public async Task<PagedResult<Meal>> GetPagedAsync(int page, int pageSize, CancellationToken ct = default)
+    {
+        var query = _db.Meals.AsNoTracking();
+        var total = await query.CountAsync(ct);
+        var items = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync(ct);
+
+        return new PagedResult<Meal>(items, total, page, pageSize);
+    }
+
+    public IQueryable<Meal> SearchByTags(string tags)
+        => _db.Meals.AsNoTracking()
+             .Where(m => EF.Property<string>(m, "_tagsCsv").Contains(tags));
 
     public void Add(Meal meal) => _db.Meals.Add(meal);
     public void Update(Meal meal) => _db.Meals.Update(meal);

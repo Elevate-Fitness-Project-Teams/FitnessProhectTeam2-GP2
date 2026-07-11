@@ -11,6 +11,7 @@ public class Meal : AggregateRoot<int>
     public string Ingredients { get; private set; } = string.Empty;
     public string Instructions { get; private set; } = string.Empty;
     public int Calories { get; private set; }
+    public int ProteinGrams { get; private set; }
     public MealType MealType { get; private set; }
 
     public IReadOnlyCollection<MealTag> Tags =>
@@ -22,27 +23,29 @@ public class Meal : AggregateRoot<int>
     private Meal() { }
 
     public Meal(string name, string nutritionFacts, string ingredients,
-                string instructions, int calories, MealType mealType,
-                IEnumerable<MealTag> tags)
+                string instructions, int calories, int proteinGrams,
+                MealType mealType, IEnumerable<MealTag> tags)
     {
         Name = name;
         NutritionFacts = nutritionFacts;
         Ingredients = ingredients;
         Instructions = instructions;
         Calories = calories;
+        ProteinGrams = proteinGrams;
         MealType = mealType;
         UpdateTagsCsv(tags);
     }
 
     public void Update(string name, string nutritionFacts, string ingredients,
-                       string instructions, int calories, MealType mealType,
-                       IEnumerable<MealTag> tags)
+                       string instructions, int calories, int proteinGrams,
+                       MealType mealType, IEnumerable<MealTag> tags)
     {
         Name = name;
         NutritionFacts = nutritionFacts;
         Ingredients = ingredients;
         Instructions = instructions;
         Calories = calories;
+        ProteinGrams = proteinGrams;
         MealType = mealType;
         UpdateTagsCsv(tags);
     }

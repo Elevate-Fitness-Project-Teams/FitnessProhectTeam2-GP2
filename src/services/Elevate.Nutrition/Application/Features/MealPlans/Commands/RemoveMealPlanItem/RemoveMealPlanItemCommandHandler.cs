@@ -19,11 +19,11 @@ public class RemoveMealPlanItemCommandHandler : IRequestHandler<RemoveMealPlanIt
     {
         var mealPlan = await _repo.GetByIdAsync(command.MealPlanId, ct);
         if (mealPlan is null)
-            return Result.Failure("MealPlan not found");
+            return Result.Failure("MealPlan not found", ErrorType.NotFound);
 
         var item = mealPlan.Items.FirstOrDefault(i => i.Id == command.MealPlanItemId);
         if (item is null)
-            return Result.Failure("MealPlanItem not found");
+            return Result.Failure("MealPlanItem not found", ErrorType.NotFound);
 
         mealPlan.RemoveItem(item);
         _repo.Update(mealPlan);

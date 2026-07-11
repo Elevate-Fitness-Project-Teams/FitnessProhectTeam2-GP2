@@ -20,7 +20,7 @@ public class DeleteMealPlanCommandHandler : IRequestHandler<DeleteMealPlanComman
         var mealPlan = await _repo.GetByIdAsync(command.Id, ct);
 
         if (mealPlan is null)
-            return Result.Failure("MealPlan not found");
+            return Result.Failure("MealPlan not found", ErrorType.NotFound);
 
         _repo.Delete(mealPlan);
         await _uow.SaveChangesAsync(ct);

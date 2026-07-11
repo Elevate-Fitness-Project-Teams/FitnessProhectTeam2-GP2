@@ -31,7 +31,7 @@ public class ApiEnvelope
     {
         if (result.IsSuccess)
         {
-            var data = result is Result<object> r ? r.Value : null;
+            var data = result.GetValue();
             return Success(data);
         }
 

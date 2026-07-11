@@ -24,6 +24,7 @@ public class CreateMealCommandHandler : IRequestHandler<CreateMealCommand, Resul
             command.Ingredients,
             command.Instructions,
             command.Calories,
+            command.ProteinGrams,
             command.MealType,
             command.Tags);
 

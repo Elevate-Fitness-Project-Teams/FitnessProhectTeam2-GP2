@@ -27,6 +27,9 @@ namespace Elevate.Auth.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("AppUserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("AttemptedAt")
                         .HasColumnType("datetime2");
 
@@ -43,6 +46,8 @@ namespace Elevate.Auth.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppUserId");
+
                     b.HasIndex("UserId", "IsSuccess", "AttemptedAt")
                         .HasDatabaseName("IX_LoginAttempts_UserId_IsSuccess_AttemptedAt");
 
@@ -52,6 +57,9 @@ namespace Elevate.Auth.Migrations
             modelBuilder.Entity("Elevate.Auth.Domain.Entities.OtpCode", b =>
                 {
                     b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AppUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CodeHash")
@@ -79,6 +87,8 @@ namespace Elevate.Auth.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppUserId");
+
                     b.HasIndex("ResetTokenHash")
                         .HasDatabaseName("IX_OtpCodes_ResetTokenHash")
                         .HasFilter("[ResetTokenHash] IS NOT NULL");
@@ -92,6 +102,9 @@ namespace Elevate.Auth.Migrations
             modelBuilder.Entity("Elevate.Auth.Domain.Entities.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AppUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
@@ -112,6 +125,8 @@ namespace Elevate.Auth.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("TokenHash")
                         .IsUnique()
@@ -139,9 +154,6 @@ namespace Elevate.Auth.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -157,7 +169,15 @@ namespace Elevate.Auth.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsLockedOut")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<DateTime?>("LastLoginAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LockedUntil")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("LockoutEnabled")
@@ -202,6 +222,10 @@ namespace Elevate.Auth.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IsLockedOut")
+                        .HasDatabaseName("IX_Users_IsLockedOut")
+                        .HasFilter("[IsLockedOut] = 1");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -345,9 +369,48 @@ namespace Elevate.Auth.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Elevate.Auth.Domain.Entities.LoginAttempt", b =>
+                {
+                    b.HasOne("Elevate.Auth.Infrastructure.Identity.AppUser", null)
+                        .WithMany("LoginAttempts")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("Elevate.Auth.Infrastructure.Identity.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Elevate.Auth.Domain.Entities.OtpCode", b =>
+                {
+                    b.HasOne("Elevate.Auth.Infrastructure.Identity.AppUser", null)
+                        .WithMany("OtpCodes")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("Elevate.Auth.Infrastructure.Identity.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Elevate.Auth.Domain.Entities.RefreshToken", b =>
+                {
+                    b.HasOne("Elevate.Auth.Infrastructure.Identity.AppUser", null)
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("Elevate.Auth.Infrastructure.Identity.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Elevate.Auth.Infrastructure.Identity.AppUser", b =>
                 {
-                    b.OwnsOne("FullName", "Name", b1 =>
+                    b.OwnsOne("Elevate.Auth.Domain.ValueObjects.FullName", "Name", b1 =>
                         {
                             b1.Property<Guid>("AppUserId")
                                 .HasColumnType("uniqueidentifier");
@@ -425,6 +488,15 @@ namespace Elevate.Auth.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Elevate.Auth.Infrastructure.Identity.AppUser", b =>
+                {
+                    b.Navigation("LoginAttempts");
+
+                    b.Navigation("OtpCodes");
+
+                    b.Navigation("RefreshTokens");
                 });
 #pragma warning restore 612, 618
         }
