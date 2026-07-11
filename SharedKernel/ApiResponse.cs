@@ -36,7 +36,16 @@ namespace SharedKernel
                 StatusCode = statusCode,
                 Errors = errors ?? []
             };
-
+        public static ApiResponse<T> Failure(Error error, int statusCode) =>
+           new()
+           {
+               IsSuccess = false,
+               Message = error.Message,
+               StatusCode = statusCode,
+               Errors = new List<string> { error.Code }
+           };
+         
+    
         public static ApiResponse<T> NotFound(string message = "Resource not found") =>
             Failure(message, 404);
 

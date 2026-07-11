@@ -53,3 +53,4 @@ public record Error(string Code, string Message, ErrorType Type = ErrorType.Fail
     public static readonly Error None = new(string.Empty, string.Empty, ErrorType.None);
 }
 
+
