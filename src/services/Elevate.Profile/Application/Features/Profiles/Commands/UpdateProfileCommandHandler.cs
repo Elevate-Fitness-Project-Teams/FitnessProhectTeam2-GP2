@@ -19,7 +19,7 @@ namespace Elevate.Profile.Application.Features.Profiles.Commands
             this.currentUser = currentUser;
            _unitOfWork = unitOfWork;
         }
-        public async Task<Unit> Handle(UpdateProfileCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateProfileCommand request, CancellationToken cancellationToken)
         {
             var userId = currentUser.UserId;
             //Get Profile
@@ -46,9 +46,6 @@ namespace Elevate.Profile.Application.Features.Profiles.Commands
             {
                 _repository.Update(profile);
             });
-
-            return Unit.Value;
-
         }
     }
 }
