@@ -7,6 +7,8 @@ namespace Elevate.subscription.Infrastructure.Presistence.Extension
     {
         public static IServiceCollection AddSubscriptionInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(SubscriptionDbContext).Assembly));
+
             services.AddDbContext<SubscriptionDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 

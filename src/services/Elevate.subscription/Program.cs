@@ -1,5 +1,8 @@
 
+using Elevate.subscription.Infrastructure.Common.Interfaces;
 using Elevate.subscription.Infrastructure.Presistence.Extension;
+using Elevate.subscription.Infrastructure.Services;
+using SharedKernel.Extension.DependencyInjection;
 
 namespace Elevate.subscription
 {
@@ -16,6 +19,8 @@ namespace Elevate.subscription
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddSubscriptionInfrastructure(builder.Configuration);
+            builder.Services.AddEndpoints(typeof(Program).Assembly);
+            builder.Services.AddScoped<IBillingSimulator, BillingSimulator>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -27,9 +32,9 @@ namespace Elevate.subscription
             }
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
-
+            
 
             app.MapControllers();
 

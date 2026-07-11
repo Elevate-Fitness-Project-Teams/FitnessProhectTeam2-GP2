@@ -4,6 +4,7 @@ using Elevate.Profile.Application.Common;
 using Elevate.Profile.Infrastructure;
 using Elevate.Profile.Infrastructure.Authentication;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel.Extension.DependencyInjection;
 
 namespace Elevate.Profile
 {
@@ -40,12 +41,12 @@ namespace Elevate.Profile
             }
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseCurrentUser();
             app.MapControllers();
-
+            app.MapEndpoints();
             app.Run();
         }
     }

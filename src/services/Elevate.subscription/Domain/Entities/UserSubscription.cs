@@ -10,48 +10,73 @@ namespace Elevate.subscription.Domain.Entities
 
         public Guid Id { get; private set; }
         public Guid UserId { get; private set; }
-        public Guid SubscriptionPlanId { get; private set; }
-        public DateTime StartDate { get; private set; }
-        public DateTime EndDate { get; private set; }
-
+        public SubscriptionTier Tier { get; private set; }
         public SubscriptionStatus Status { get; private set; }
+        public DateTime? ExpiresAt { get; private set; }
+        public bool AutoRenew { get; private set; }
+        public DateTime CreatedAt { get; private set; }
+        public DateTime? UpdatedAt { get; private set; }
 
-        public static UserSubscription Create(Guid userId, Guid planId, int durationInDays)
+
+        public static UserSubscription CreatePremium(Guid userId, int durationMonths)
         {
             var now = DateTime.UtcNow;
-            return new UserSubscription
+
+            var subscription = new UserSubscription
             {
                 Id = Guid.NewGuid(),
                 UserId = userId,
-                SubscriptionPlanId = planId,
-                StartDate = now,
-                EndDate = now.AddDays(durationInDays),
-                Status = SubscriptionStatus.Active
+                Tier = SubscriptionTier.Premium,
+                Status = SubscriptionStatus.Active,
+                ExpiresAt = now.AddMonths(durationMonths),
+                AutoRenew = true,
+                CreatedAt = now
             };
+
+            subscription.AddDomainEvent(new SubscriptionUpgradedEvent(
+                subscription.Id,
+                subscription.UserId,
+                subscription.Tier,
+                subscription.ExpiresAt.Value,
+                DateTime.UtcNow));
+
+            return subscription;
         }
 
-        public void CheckExpiration()
+
+        public void UpgradeToPremium(int durationMonths)
         {
-            if (DateTime.UtcNow > EndDate && Status == SubscriptionStatus.Active)
+            Tier = SubscriptionTier.Premium;
+            Status = SubscriptionStatus.Active;
+            ExpiresAt = DateTime.UtcNow.AddMonths(durationMonths);
+            AutoRenew = true;
+            UpdatedAt = DateTime.UtcNow;
+
+            AddDomainEvent(new SubscriptionUpgradedEvent(
+                Id, UserId, Tier, ExpiresAt.Value, DateTime.UtcNow));
+        }
+
+
+        public void Cancel()
+        {
+            if (Status != SubscriptionStatus.Active)
+                throw new InvalidOperationException("No active subscription to cancel.");
+
+            AutoRenew = false;
+            UpdatedAt = DateTime.UtcNow;
+
+            AddDomainEvent(new SubscriptionCancelledEvent(
+                Id, UserId, ExpiresAt, DateTime.UtcNow));
+        }
+
+
+        public void MarkExpiredIfPastDue()
+        {
+            if (ExpiresAt.HasValue && DateTime.UtcNow > ExpiresAt.Value && Status == SubscriptionStatus.Active)
             {
                 Status = SubscriptionStatus.Expired;
+                UpdatedAt = DateTime.UtcNow;
             }
-        }
-
-        public void CancelSubscription()
-        {
-            if (Status == SubscriptionStatus.Active)
-            {
-                Status = SubscriptionStatus.Cancelled;
-            }
-        }
-        public void UpgradePlan(Guid newPlanId, int newDurationInDays)
-        {
-            SubscriptionPlanId = newPlanId;
-            EndDate = DateTime.UtcNow.AddDays(newDurationInDays);
-            Status = SubscriptionStatus.Active;
-
-            AddDomainEvent(new SubscriptionUpgradedEvent(Id, UserId, newPlanId, DateTime.UtcNow));
         }
     }
 }

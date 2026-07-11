@@ -4,31 +4,40 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Elevate.Subscription.Infrastructure.Persistence.Configurations;
 
-public sealed class UserSubscriptionConfiguration : IEntityTypeConfiguration<UserSubscription>
+public class UserSubscriptionConfiguration : IEntityTypeConfiguration<UserSubscription>
 {
     public void Configure(EntityTypeBuilder<UserSubscription> builder)
     {
         builder.ToTable("UserSubscriptions");
 
-        builder.HasKey(x => x.Id);
+        builder.HasKey(s => s.Id);
 
-        builder.Property(x => x.UserId)
+        builder.Property(s => s.UserId)
             .IsRequired();
 
-        builder.Property(x => x.SubscriptionPlanId)
-            .IsRequired();
+        builder.HasIndex(s => s.UserId)
+            .IsUnique();
 
-        builder.Property(x => x.StartDate)
-            .IsRequired();
-
-        builder.Property(x => x.EndDate)
-            .IsRequired();
-
-        builder.Property(x => x.Status)
-            .HasConversion<string>() 
+        builder.Property(s => s.Tier)
+            .HasConversion<string>()
             .HasMaxLength(20)
             .IsRequired();
 
-        builder.HasIndex(x => x.UserId);
+        builder.Property(s => s.Status)
+            .HasConversion<string>()
+            .HasMaxLength(20)
+            .IsRequired();
+
+        builder.Property(s => s.ExpiresAt);
+
+        builder.Property(s => s.AutoRenew)
+            .IsRequired();
+
+        builder.Property(s => s.CreatedAt)
+            .IsRequired();
+
+        builder.Property(s => s.UpdatedAt);
+
+        builder.Ignore(s => s.DomainEvents);
     }
 }
