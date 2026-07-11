@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using SharedKernel;
 using SharedKernel.Interfaces;
 
 namespace Elevate.subscription.Features.CancelSubscription

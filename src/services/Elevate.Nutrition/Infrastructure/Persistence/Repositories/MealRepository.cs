@@ -17,15 +17,6 @@ public class MealRepository : IMealRepository
     public IQueryable<Meal> GetAllQueryable()
         => _db.Meals.AsNoTracking();
 
-    public async Task<PagedResult<Meal>> GetPagedAsync(int page, int pageSize, CancellationToken ct = default)
-    {
-        var query = _db.Meals.AsNoTracking();
-        var total = await query.CountAsync(ct);
-        var items = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync(ct);
-
-        return new PagedResult<Meal>(items, total, page, pageSize);
-    }
-
     public IQueryable<Meal> SearchByTags(string tags)
         => _db.Meals.AsNoTracking()
              .Where(m => EF.Property<string>(m, "_tagsCsv").Contains(tags));
