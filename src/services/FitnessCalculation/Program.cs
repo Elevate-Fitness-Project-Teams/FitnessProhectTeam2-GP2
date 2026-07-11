@@ -1,4 +1,6 @@
 using Elevate.Fitness.Services;
+using Elevate.FitnessCalculation.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace Elevate.Fitness;
 
@@ -13,6 +15,9 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         builder.Services.AddSingleton<CalorieTargetService>();
+        builder.Services.AddDbContext<FitnessCalcDbContext>(options =>
+            options.UseSqlServer(
+                builder.Configuration.GetConnectionString("DefaultConnection")));
 
         var app = builder.Build();
 
