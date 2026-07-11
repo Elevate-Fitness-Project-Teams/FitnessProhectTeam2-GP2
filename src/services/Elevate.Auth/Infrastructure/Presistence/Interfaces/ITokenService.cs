@@ -4,7 +4,7 @@
     {
         
         (string Jwt, string RawRefreshToken, string RefreshTokenHash, DateTime ExpiresAt)
-            GenerateTokenPair(Guid userId);
+        GenerateTokenPair(Guid userId);
 
         (string RawToken, string TokenHash) GenerateResetToken();
 

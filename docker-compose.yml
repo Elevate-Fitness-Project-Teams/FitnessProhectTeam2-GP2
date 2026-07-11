@@ -1,4 +1,17 @@
 services:
+  sqlserver-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: elevate-sqlserver-db
+    restart: unless-stopped
+    ports:
+      - "1444:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Elvate2026!
+    volumes:
+      - sqlserver-db-data:/var/opt/mssql
+
+  # --- MariaDB (Nutrition DB) ---
   nutrition-db:
     image: mariadb:11.4
     container_name: elevate-nutrition-db
@@ -18,155 +31,88 @@ services:
       timeout: 5s
       retries: 5
 
+  # --- Auth Microservice ---
+  elevate.auth:
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Auth/Dockerfile
+    image: elevate.auth
+    container_name: elevate-auth-api
+    restart: unless-stopped
+    ports:
+      - "5007:8080"
+
+  # --- Nutrition Microservice ---
   nutrition-api:
     build:
       context: .
       dockerfile: src/services/Elevate.Nutrition/Dockerfile
+    image: elevate.nutrition
     container_name: elevate-nutrition-api
     restart: unless-stopped
     ports:
-      - "5002:8080"
+      - "5003:8080"
     depends_on:
       nutrition-db:
         condition: service_healthy
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__NutritionDb=server=nutrition-db;port=3306;database=nutrition;user=root;password=rootpassword;CharSet=utf8mb4
+      - ConnectionStrings__NutritionDb=server=nutrition-db;port=3306;database=nutrition;user=nutrition_user;password=nutrition_pass;CharSet=utf8mb4
+      - Services__FceApi__BaseUrl=http://elevate.fitnesscalculation:8080
+      - JwtSettings__Secret=SuperSecretKeyThatIsVeryLongAndSecure123456!
+      - JwtSettings__Issuer=ElevateAuthService
+      - JwtSettings__Audience=ElevateFitnessApp
+
+  elevate.fitnesscalculation:
+    image: elevate.fitnesscalculation
+    build:
+      context: .
+      dockerfile: src/services/FitnessCalculation/Dockerfile
+
+  elevate.notifications:
+    image: elevate.notifications
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Notifications/Dockerfile
+
+  elevate.profile:
+    image: elevate.profile
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Profile/Dockerfile
+
+  elevate.progress:
+    image: elevate.progress
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Progress/Dockerfile
+
+  elevate.workout:
+    image: elevate.workout
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Workout/Dockerfile
+
+  elevate.smartcoach:
+    image: elevate.smartcoach
+    build:
+      context: .
+      dockerfile: src/services/Elevate.smartCoach/Dockerfile
+    container_name: elevate-smartcoach-api
+    restart: unless-stopped
+    ports:
+      - "5004:8080"
+
+  elevate.subscription:
+    image: elevate.subscription
+    build:
+      context: .
+      dockerfile: src/services/Elevate.subscription/Dockerfile
+  
 
 volumes:
+  sqlserver-db-data:
   nutrition-db-data:
-  elevate.auth:
-    image: elevate.auth
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Auth/Dockerfile
-
-  elevate.fitnesscalculation:
-    image: elevate.fitnesscalculation
-    build:
-      context: .
-      dockerfile: src/services/FitnessCalculation/Dockerfile
-
-  elevate.notifications:
-    image: elevate.notifications
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Notifications/Dockerfile
-
-  elevate.nutrition:
-    image: elevate.nutrition
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Nutrition/Dockerfile
-
-  elevate.profile:
-    image: elevate.profile
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Profile/Dockerfile
-
-  elevate.progress:
-    image: elevate.progress
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Progress/Dockerfile
-
-  elevate.workout:
-    image: elevate.workout
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Workout/Dockerfile
-
-  elevate.smartcoach:
-    image: elevate.smartcoach
-    build:
-      context: .
-      dockerfile: src/services/Elevate.smartCoach/Dockerfile
-
-  elevate.subscription:
-    image: elevate.subscription
-    build:
-      context: .
-      dockerfile: src/services/Elevate.subscription/Dockerfile
-
-  elevate.nutrition:
-    image: elevate.nutrition
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Nutrition/Dockerfile
-
-services:
-  elevate.nutrition:
-    image: elevate.nutrition
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Nutrition/Dockerfile
-
-services:
-  elevate.nutrition:
-    image: elevate.nutrition
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Nutrition/Dockerfile
-
-services:
-  elevate.auth:
-    image: elevate.auth
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Auth/Dockerfile
-
-  elevate.fitnesscalculation:
-    image: elevate.fitnesscalculation
-    build:
-      context: .
-      dockerfile: src/services/FitnessCalculation/Dockerfile
-
-  elevate.notifications:
-    image: elevate.notifications
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Notifications/Dockerfile
-
-  elevate.nutrition:
-    image: elevate.nutrition
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Nutrition/Dockerfile
-
-  elevate.profile:
-    image: elevate.profile
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Profile/Dockerfile
-
-  elevate.progress:
-    image: elevate.progress
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Progress/Dockerfile
-
-  elevate.workout:
-    image: elevate.workout
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Workout/Dockerfile
-
-  elevate.smartcoach:
-    image: elevate.smartcoach
-    build:
-      context: .
-      dockerfile: src/services/Elevate.smartCoach/Dockerfile
-
-  elevate.subscription:
-    image: elevate.subscription
-    build:
-      context: .
-      dockerfile: src/services/Elevate.subscription/Dockerfile
-
-  sharedkernel:
-    image: sharedkernel
-    build:
-      context: .
-      dockerfile: SharedKernel/Dockerfile
+ 
+  
 

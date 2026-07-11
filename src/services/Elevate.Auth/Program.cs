@@ -2,6 +2,10 @@
 using AuthService.Infrastructure.Persistence;
 using AuthService.Infrastructure.Persistence.Seeders;
 using Elevate.Auth.Domain.Interfaces;
+using Elevate.Auth.Features.Login;
+using Elevate.Auth.Infrastructure;
+using Elevate.Auth.Infrastructure.Identity;
+using Elevate.Auth.Infrastructure.Presistence.Interfaces;
 using Elevate.Auth.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +25,6 @@ namespace Elevate.Auth
             builder.Services.AddDbContext<AuthDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
-
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -40,6 +43,7 @@ namespace Elevate.Auth
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]!))
                 };
             });
+            builder.Services.AddAuthServices();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -53,10 +57,6 @@ namespace Elevate.Auth
                 try
                 {
                     var dbContext = services.GetRequiredService<AuthDbContext>();
-
-
-
-
                     logger.LogInformation("[AuthService] Starting database migration & seeding...");
                     await AuthDbSeeder.SeedAsync(dbContext, logger);
                 }
@@ -66,21 +66,18 @@ namespace Elevate.Auth
                 }
             }
             
-
                     // Configure the HTTP request pipeline.
                     if (app.Environment.IsDevelopment())
                     {
                         app.UseSwagger();
                         app.UseSwaggerUI();
                     }
-
                     app.UseHttpsRedirection();
-
+                    app.UseAuthentication();
                     app.UseAuthorization();
 
-
                     app.MapControllers();
-
+                    app.MapAuthEndpoints();
                     app.Run();
 
 

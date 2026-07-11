@@ -1,6 +1,25 @@
-@Elevate.Nutrition_HostAddress = http://localhost:5194
+@Elevate.Nutrition_HostAddress = http://localhost:5003
 
-GET {{Elevate.Nutrition_HostAddress}}/weatherforecast/
+### Health check
+GET {{Elevate.Nutrition_HostAddress}}/api/nutrition/health
 Accept: application/json
 
-###
+### Get all meals
+GET {{Elevate.Nutrition_HostAddress}}/api/nutrition/meals
+Accept: application/json
+
+### Get meal by id
+GET {{Elevate.Nutrition_HostAddress}}/api/nutrition/meals/1
+Accept: application/json
+
+### Search meals by tags
+GET {{Elevate.Nutrition_HostAddress}}/api/nutrition/meals/search?tags=HighProtein
+Accept: application/json
+
+### Get all meal plans
+GET {{Elevate.Nutrition_HostAddress}}/api/nutrition/mealplans
+Accept: application/json
+
+### Get meal plan by id
+GET {{Elevate.Nutrition_HostAddress}}/api/nutrition/mealplans/1
+Accept: application/json
