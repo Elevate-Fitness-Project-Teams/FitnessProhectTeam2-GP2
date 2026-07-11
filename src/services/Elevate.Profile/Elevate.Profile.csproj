@@ -24,6 +24,7 @@
   <ItemGroup>
     <Folder Include="Api\MiddleWares\" />
     <Folder Include="Application\Features\Profiles\Commands\" />
+    <Folder Include="Controllers\" />
     <Folder Include="Domain\Exceptions\" />
     <ProjectReference Include="..\..\..\SharedKernel\SharedKernel.csproj" />
     <ProjectReference Include="..\Elevate.subscription\Elevate.subscription.csproj" />

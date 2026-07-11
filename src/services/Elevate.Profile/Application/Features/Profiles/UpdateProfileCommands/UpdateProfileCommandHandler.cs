@@ -50,5 +50,10 @@ namespace Elevate.Profile.Application.Features.Profiles.Commands
             return Unit.Value;
 
         }
+
+        Task IRequestHandler<UpdateProfileCommand>.Handle(UpdateProfileCommand request, CancellationToken cancellationToken)
+        {
+            return Handle(request, cancellationToken);
+        }
     }
 }

@@ -18,5 +18,10 @@ namespace Elevate.Profile.Application.Features.Profiles.UpdatePasswords
 
             throw new NotImplementedException();
         }
+
+        Task IRequestHandler<ChangePasswordCommand>.Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
+        {
+            return Handle(request, cancellationToken);
+        }
     }
 }
