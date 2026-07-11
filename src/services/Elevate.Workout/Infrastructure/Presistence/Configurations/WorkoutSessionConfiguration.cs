@@ -10,22 +10,16 @@ public sealed class WorkoutSessionConfiguration : IEntityTypeConfiguration<Worko
     {
         builder.ToTable("WorkoutSessions");
 
-        builder.HasKey(x => x.Id);
+        builder.HasKey(s => s.Id); // Guid
 
-        builder.Property(x => x.Name)
-            .IsRequired()
-            .HasMaxLength(100);
+        builder.HasMany(s => s.Exercises)
+               .WithOne()
+               .HasForeignKey(e => e.WorkoutSessionId) 
+               .OnDelete(DeleteBehavior.Cascade);
 
-        builder.Property(x => x.Type)
-            .IsRequired()
-            .HasMaxLength(50);
+        builder.Property(s => s.Type)
+       .HasConversion<string>();
 
-        builder.HasMany(x => x.Exercises)
-            .WithOne()
-            .HasForeignKey(x => x.WorkoutSessionId)
-            .OnDelete(DeleteBehavior.Cascade); 
-
-        // Explicitly back the read-only collection with the private list field
         builder.Metadata.FindNavigation(nameof(WorkoutSession.Exercises))?
             .SetPropertyAccessMode(PropertyAccessMode.Field);
     }

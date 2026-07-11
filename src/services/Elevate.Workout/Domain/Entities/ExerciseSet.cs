@@ -1,37 +1,31 @@
-﻿using System;
-
-namespace Elevate.Workout.Domain.Entities;
-
-public sealed class ExerciseSet 
+﻿namespace Elevate.Workout.Domain.Entities
 {
-    private ExerciseSet() { }
-    public Guid Id { get; private set; }
-    public Guid WorkoutExerciseId { get; private set; }
-    public int SetNumber { get; private set; }
-    public int Reps { get; private set; }
-    public decimal WeightInKg { get; private set; }
-    public bool IsCompleted { get; private set; }
-
-    internal static ExerciseSet Create(Guid workoutExerciseId, int setNumber, int reps, decimal weightInKg)
+    public sealed class ExerciseSet
     {
-        if (reps < 0 || weightInKg < 0)
+        private ExerciseSet() { }
+
+        public int Id { get; private set; } 
+        public int WorkoutExerciseId { get; private set; } 
+        public int SetNumber { get; private set; }
+        public int Reps { get; private set; }
+        public decimal WeightInKg { get; private set; }
+        public bool IsCompleted { get; private set; }
+
+        public static ExerciseSet Create(int workoutExerciseId, int setNumber, int reps, decimal weightInKg)
         {
-            throw new ArgumentException("Metrics data arguments cannot be negative numerical values.");
+            return new ExerciseSet
+            {
+                WorkoutExerciseId = workoutExerciseId,
+                SetNumber = setNumber,
+                Reps = reps,
+                WeightInKg = weightInKg,
+                IsCompleted = false
+            };
         }
 
-        return new ExerciseSet
+        public void Complete()
         {
-            Id = Guid.NewGuid(),
-            WorkoutExerciseId = workoutExerciseId,
-            SetNumber = setNumber,
-            Reps = reps,
-            WeightInKg = weightInKg,
-            IsCompleted = false 
-        };
-    }
-
-    public void MarkAsCompleted()
-    {
-        IsCompleted = true;
+            IsCompleted = true;
+        }
     }
 }

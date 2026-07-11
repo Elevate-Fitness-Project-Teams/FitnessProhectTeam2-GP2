@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace Elevate.Subscription.Infrastructure.Persistence;
 
-public sealed class SubscriptionDbContext : BaseDbContext
+// DbContext — inherits BaseDbContext, scans for + dispatches those events automatically
+public class SubscriptionDbContext : BaseDbContext
 {
-    public SubscriptionDbContext(DbContextOptions<SubscriptionDbContext> options, IMediator mediator) : base(options, mediator)
+    public SubscriptionDbContext(DbContextOptions<SubscriptionDbContext> options, IMediator mediator)
+        : base(options, mediator)
     {
     }
 
-    public DbSet<SubscriptionPlan> SubscriptionPlans => Set<SubscriptionPlan>();
     public DbSet<UserSubscription> UserSubscriptions => Set<UserSubscription>();
+    public DbSet<BillingLog> BillingLogs => Set<BillingLog>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
-
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(SubscriptionDbContext).Assembly);
+        base.OnModelCreating(modelBuilder);
     }
-
-    
 }
+

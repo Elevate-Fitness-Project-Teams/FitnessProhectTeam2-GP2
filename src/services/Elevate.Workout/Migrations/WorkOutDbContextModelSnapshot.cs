@@ -22,11 +22,47 @@ namespace Elevate.Workout.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Elevate.Workout.Domain.Entities.Exercise", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("Equipment")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("TargetMuscles")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("VideoUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Exercises", (string)null);
+                });
+
             modelBuilder.Entity("Elevate.Workout.Domain.Entities.ExerciseSet", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("bit");
@@ -38,28 +74,71 @@ namespace Elevate.Workout.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("WeightInKg")
-                        .HasColumnType("decimal(5,2)");
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("WorkoutExerciseId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("WorkoutExerciseId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("WorkoutExerciseId");
 
-                    b.ToTable("ExerciseSets", (string)null);
+                    b.ToTable("ExerciseSets");
+                });
+
+            modelBuilder.Entity("Elevate.Workout.Domain.Entities.Workout", b =>
+                {
+                    b.Property<int>("WorkoutId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WorkoutId"));
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Difficulty")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EstimatedDurationInMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrderIndex")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkoutPlanId")
+                        .HasColumnType("int");
+
+                    b.HasKey("WorkoutId");
+
+                    b.HasIndex("Category")
+                        .HasDatabaseName("IX_Workouts_Category");
+
+                    b.HasIndex("WorkoutPlanId");
+
+                    b.ToTable("Workouts");
                 });
 
             modelBuilder.Entity("Elevate.Workout.Domain.Entities.WorkoutExercise", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ExerciseName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Order")
                         .HasColumnType("int");
@@ -69,9 +148,68 @@ namespace Elevate.Workout.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ExerciseId");
+
                     b.HasIndex("WorkoutSessionId");
 
                     b.ToTable("WorkoutExercises", (string)null);
+                });
+
+            modelBuilder.Entity("Elevate.Workout.Domain.Entities.WorkoutExerciseCatalogItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderIndex")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkoutId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExerciseId");
+
+                    b.HasIndex("WorkoutId", "OrderIndex");
+
+                    b.ToTable("WorkoutExerciseCatalogItems", (string)null);
+                });
+
+            modelBuilder.Entity("Elevate.Workout.Domain.Entities.WorkoutPlan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("Difficulty")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("DurationWeeks")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WorkoutPlans", (string)null);
                 });
 
             modelBuilder.Entity("Elevate.Workout.Domain.Entities.WorkoutSession", b =>
@@ -91,16 +229,17 @@ namespace Elevate.Workout.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("WorkoutID")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -116,18 +255,64 @@ namespace Elevate.Workout.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Elevate.Workout.Domain.Entities.Workout", b =>
+                {
+                    b.HasOne("Elevate.Workout.Domain.Entities.WorkoutPlan", "WorkoutPlan")
+                        .WithMany("Workouts")
+                        .HasForeignKey("WorkoutPlanId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("WorkoutPlan");
+                });
+
             modelBuilder.Entity("Elevate.Workout.Domain.Entities.WorkoutExercise", b =>
                 {
+                    b.HasOne("Elevate.Workout.Domain.Entities.Exercise", "Exercise")
+                        .WithMany()
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Elevate.Workout.Domain.Entities.WorkoutSession", null)
                         .WithMany("Exercises")
                         .HasForeignKey("WorkoutSessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Exercise");
+                });
+
+            modelBuilder.Entity("Elevate.Workout.Domain.Entities.WorkoutExerciseCatalogItem", b =>
+                {
+                    b.HasOne("Elevate.Workout.Domain.Entities.Exercise", "Exercise")
+                        .WithMany()
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Elevate.Workout.Domain.Entities.Workout", null)
+                        .WithMany("Exercises")
+                        .HasForeignKey("WorkoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exercise");
+                });
+
+            modelBuilder.Entity("Elevate.Workout.Domain.Entities.Workout", b =>
+                {
+                    b.Navigation("Exercises");
                 });
 
             modelBuilder.Entity("Elevate.Workout.Domain.Entities.WorkoutExercise", b =>
                 {
                     b.Navigation("Sets");
+                });
+
+            modelBuilder.Entity("Elevate.Workout.Domain.Entities.WorkoutPlan", b =>
+                {
+                    b.Navigation("Workouts");
                 });
 
             modelBuilder.Entity("Elevate.Workout.Domain.Entities.WorkoutSession", b =>

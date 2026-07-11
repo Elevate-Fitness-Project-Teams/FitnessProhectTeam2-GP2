@@ -8,12 +8,13 @@ namespace Elevate.Workout.Infrastructure.Presistence.Configurations
     {
         public void Configure(EntityTypeBuilder<ExerciseSet> builder)
         {
-            builder.ToTable("ExerciseSets");
+            builder.HasKey(e => e.Id);
+            builder.Property(e => e.Id).UseIdentityColumn();
 
-            builder.HasKey(x => x.Id);
-
-            builder.Property(x => x.WeightInKg)
-                .HasColumnType("decimal(5,2)");
+            builder.Property(e => e.Reps).IsRequired();
+            builder.Property(e => e.WeightInKg).HasColumnType("decimal(18,2)").IsRequired();
+            builder.Property(e => e.SetNumber).IsRequired();
+            builder.Property(e => e.IsCompleted).IsRequired();
         }
     }
 }
