@@ -1,6 +1,8 @@
 ﻿using Elevate.Profile.Application.Features.Profile.Queries;
+using Elevate.Profile.Application.Features.Profiles.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading;
 
 namespace Elevate.Profile.Api.Controllers
 {
@@ -14,6 +16,7 @@ namespace Elevate.Profile.Api.Controllers
         public ProfileController(IMediator mediator)
         {
             _mediator = mediator;
+
         }
 
         [HttpGet]
@@ -22,6 +25,13 @@ namespace Elevate.Profile.Api.Controllers
             var result = await _mediator.Send(new GetProfileQuery(), cancellationToken);
 
             return Ok(result);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateProfile(string firstName,string LastName,string Email,string PhoneNumber)
+        {
+           await _mediator.Send(new UpdateProfileCommand(firstName, LastName, Email, PhoneNumber));
+           return Ok();
         }
     }
 }
