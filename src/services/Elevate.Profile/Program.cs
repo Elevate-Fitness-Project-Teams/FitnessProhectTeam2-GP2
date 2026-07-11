@@ -1,8 +1,11 @@
 
 using Elevate.Profile.Api.Extensions;
 using Elevate.Profile.Application.Common;
+using Elevate.Profile.Application.Features.Profile.Queries;
+using Elevate.Profile.Domain.Interfaces;
 using Elevate.Profile.Infrastructure;
 using Elevate.Profile.Infrastructure.Authentication;
+using Elevate.Profile.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel.Extension.DependencyInjection;
 
@@ -30,7 +33,12 @@ namespace Elevate.Profile
             builder.Services.AddScoped<ICurrentUserInitializer, CurrentUser>(x => x.GetRequiredService<CurrentUser>());
             builder.Services.AddScoped<ICurrentUser, CurrentUser>(x => x.GetRequiredService<CurrentUser>());
 
-
+            builder.Services.AddScoped(typeof(IGeneralRepository<>), typeof(GeneralRepository<>));
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(typeof(GetProfileQuery).Assembly);
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -43,7 +51,7 @@ namespace Elevate.Profile
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseStaticFiles();
             app.UseCurrentUser();
             app.MapControllers();
             app.MapEndpoints();
