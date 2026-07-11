@@ -6,7 +6,6 @@ using Microsoft.OpenApi.Models;
 using Elevate.Nutrition.Api.Middleware;
 using Elevate.Nutrition.Application;
 using Elevate.Nutrition.Infrastructure;
-
 namespace Elevate.Nutrition;
 
 public class Program
