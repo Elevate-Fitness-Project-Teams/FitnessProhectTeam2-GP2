@@ -63,14 +63,14 @@ namespace Elevate.Profile.Domain.Entities
         public void UpdateProfile(
             FullName name, 
             Email email, 
-            string phoneNumber, 
-            string? profilePictureUrl
+            string phoneNumber
+         
         )
         {
             Name = name;
             Email = email;
             PhoneNumber = phoneNumber;
-            ProfilePictureUrl = profilePictureUrl;
+            //ProfilePictureUrl = profilePictureUrl;
         }
 
         public void UpdatePreferences(UserPreferences preferences)

@@ -22,8 +22,6 @@
 
   <ItemGroup>
     <Folder Include="Api\MiddleWares\" />
-    <Folder Include="Application\Features\Profiles\Commands\" />
-    <Folder Include="Domain\Exceptions\" />
   </ItemGroup>
 
 </Project>
