@@ -51,7 +51,7 @@ namespace Elevate.Profile
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseStaticFiles();
             app.UseCurrentUser();
             app.MapControllers();
             app.MapEndpoints();

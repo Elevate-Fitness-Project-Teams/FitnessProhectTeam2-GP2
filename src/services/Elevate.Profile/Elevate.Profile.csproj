@@ -30,7 +30,6 @@
 
   <ItemGroup>
     <Folder Include="Api\MiddleWares\" />
-    <Folder Include="Domain\Exceptions\" />
     <ProjectReference Include="..\..\..\SharedKernel\SharedKernel.csproj" />
     <ProjectReference Include="..\Elevate.subscription\Elevate.subscription.csproj" />
   </ItemGroup>
