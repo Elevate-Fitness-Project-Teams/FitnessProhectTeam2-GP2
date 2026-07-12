@@ -11,7 +11,7 @@ namespace Elevate.FitnessCalculation.Infrastructure.Persistance.Configrations
             builder.ToTable("CalculatedMetrics");
             builder.HasKey(cm=>cm.Id);
             builder.Property(cm => cm.UserId).IsRequired();
-            builder.OwnsOne(cm => cm.metabolic, m =>
+            builder.OwnsOne(cm => cm.Metabolic, m =>
             {
                 m.Property(mm => mm.Bmr).HasColumnName("BMR");
                 m.Property(mm => mm.Tdee).HasColumnName("TDEE");
