@@ -1,6 +1,6 @@
 ﻿using Elevate.Progress.Domain.Entities;
 using Elevate.Progress.Features.LogWeightEntry.DTOS;
-using Elevate.Progress.Infrastructure.Persistence;
+using Elevate.Progress.Infrastructure.Persistence.ProgressDbContext;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

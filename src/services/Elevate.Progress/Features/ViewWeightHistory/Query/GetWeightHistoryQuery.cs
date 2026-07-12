@@ -1,5 +1,5 @@
 ﻿using Elevate.Progress.Features.ViewWeightHistory.DTOS;
-using Elevate.Progress.Infrastructure.Persistence;
+using Elevate.Progress.Infrastructure.Persistence.ProgressDbContext;
 using Elevate.Progress.Shared.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

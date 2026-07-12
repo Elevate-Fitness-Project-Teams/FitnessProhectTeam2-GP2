@@ -2,7 +2,8 @@
 {
     public static class RabbitMqConstants
     {
-        public const string Exchange = "fitness.events";
+        public const string FitnessExchange = "fitness.events";
+        public const string ProgressExchange = "progress.exchange";
 
         public static class RoutingKeys
         {

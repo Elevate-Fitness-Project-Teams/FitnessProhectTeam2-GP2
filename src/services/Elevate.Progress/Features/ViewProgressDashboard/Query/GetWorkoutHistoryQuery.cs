@@ -1,7 +1,7 @@
 ﻿using Elevate.Progress.Domain.Enums;
 using Elevate.Progress.Features.ViewProgressDashboard.DTOS;
 using Elevate.Progress.Features.ViewProgressDashboard.Exception;
-using Elevate.Progress.Infrastructure.Persistence;
+using Elevate.Progress.Infrastructure.Persistence.ProgressDbContext;
 using Elevate.Progress.Shared.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

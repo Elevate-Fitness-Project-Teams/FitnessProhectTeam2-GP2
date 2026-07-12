@@ -1,4 +1,5 @@
 services:
+
   sqlserver-db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: elevate-sqlserver-db
@@ -10,6 +11,7 @@ services:
       - MSSQL_SA_PASSWORD=Elvate2026!
     volumes:
       - sqlserver-db-data:/var/opt/mssql
+
 
   # --- MariaDB (Nutrition DB) ---
   nutrition-db:
@@ -30,14 +32,41 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+
+  # --- MariaDB (Progress DB) ---
+  progress-db:
+    image: mariadb:11.4
+    container_name: elevate-progress-db
+    restart: unless-stopped
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: ElevateProgressDb
+      MYSQL_USER: progress_user
+      MYSQL_PASSWORD: progress_pass
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - progress-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+
   # --- RabbitMQ Message Broker ---
   rabbitmq:
     image: rabbitmq:3.13-management-alpine
     container_name: elevate-rabbitmq
     restart: unless-stopped
     ports:
-      - "5672:5672"   
-      - "15672:15672" #  Management Dashboard 
+      - "5672:5672"
+      - "15672:15672"
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
@@ -46,6 +75,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+
   # --- Auth Microservice ---
   elevate.auth:
     build:
@@ -59,6 +90,8 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+
+
   # --- Nutrition Microservice ---
   nutrition-api:
     build:
@@ -80,17 +113,41 @@ services:
       - JwtSettings__Issuer=ElevateAuthService
       - JwtSettings__Audience=ElevateFitnessApp
 
+
+  # --- Progress Microservice ---
+  elevate.progress:
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Progress/Dockerfile
+    image: elevate.progress
+    container_name: elevate-progress-api
+    restart: unless-stopped
+    ports:
+      - "5005:8080"
+    depends_on:
+      progress-db:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=server=progress-db;port=3306;database=ElevateProgressDb;user=progress_user;password=progress_pass;CharSet=utf8mb4
+      - JwtSettings__Secret=SuperSecretKeyThatIsVeryLongAndSecure123456!
+      - JwtSettings__Issuer=ElevateAuthService
+      - JwtSettings__Audience=ElevateFitnessApp
+
+
   elevate.fitnesscalculation:
     image: elevate.fitnesscalculation
     build:
       context: .
       dockerfile: src/services/FitnessCalculation/Dockerfile
 
+
   elevate.notifications:
     image: elevate.notifications
     build:
       context: .
       dockerfile: src/services/Elevate.Notifications/Dockerfile
+
 
   elevate.profile:
     image: elevate.profile
@@ -100,17 +157,14 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
-  elevate.progress:
-    image: elevate.progress
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Progress/Dockerfile
+
 
   elevate.workout:
     image: elevate.workout
     build:
       context: .
       dockerfile: src/services/Elevate.Workout/Dockerfile
+
 
   elevate.smartcoach:
     image: elevate.smartcoach
@@ -122,16 +176,15 @@ services:
     ports:
       - "5004:8080"
 
+
   elevate.subscription:
     image: elevate.subscription
     build:
       context: .
       dockerfile: src/services/Elevate.subscription/Dockerfile
-  
+
 
 volumes:
   sqlserver-db-data:
   nutrition-db-data:
- 
-  
-
+  progress-db-data:

@@ -4,11 +4,14 @@ using Elevate.Progress.Features.LogWeightEntry.Exception;
 using Elevate.Progress.Features.LogWeightEntry.Query;
 using Elevate.Progress.Integration.Clients;
 using Elevate.Progress.Integration.Events;
+using Elevate.Progress.Integration.Publishers;
+using Elevate.Progress.Integration.RabbitMQ;
 using MediatR;
 
 namespace Elevate.Progress.Features.LogWeightEntry.Orchestrator
 {
-    public record LogWeightEntryOrchestrator(LogWeightEntryRequestDto RequestDto)
+    public record LogWeightEntryOrchestrator(
+        LogWeightEntryRequestDto RequestDto)
         : IRequest<LogWeightEntryResponseDto>;
 
     public class LogWeightEntryOrchestratorHandler
@@ -16,13 +19,16 @@ namespace Elevate.Progress.Features.LogWeightEntry.Orchestrator
     {
         private readonly IMediator _mediator;
         private readonly IFitnessClient _fitnessClient;
+        private readonly IRabbitMqPublisher _rabbitMqPublisher;
 
         public LogWeightEntryOrchestratorHandler(
             IMediator mediator,
-            IFitnessClient fitnessClient)
+            IFitnessClient fitnessClient,
+            IRabbitMqPublisher rabbitMqPublisher)
         {
             _mediator = mediator;
             _fitnessClient = fitnessClient;
+            _rabbitMqPublisher = rabbitMqPublisher;
         }
 
         public async Task<LogWeightEntryResponseDto> Handle(
@@ -79,13 +85,14 @@ namespace Elevate.Progress.Features.LogWeightEntry.Orchestrator
                     }),
                 cancellationToken);
 
-            // 5. Publish Integration Event
-            await _mediator.Publish(
-                new WeightUpdatedIntegrationEvent(
-                    new WeightUpdatedEvent(
-                        request.RequestDto.UserId,
-                        request.RequestDto.Weight,
-                        request.RequestDto.Date)),
+            // 5. Publish Weight Updated Event
+            await _rabbitMqPublisher.PublishEventAsync(
+                new WeightUpdatedEvent(
+                    request.RequestDto.UserId,
+                    request.RequestDto.Weight,
+                    request.RequestDto.Date),
+                RabbitMqConstants.FitnessExchange,
+                RabbitMqConstants.RoutingKeys.WeightUpdated,
                 cancellationToken);
 
             // 6. Get Height from FCE

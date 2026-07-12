@@ -1,5 +1,5 @@
 ﻿using Elevate.Progress.Features.LogWorkoutCompletion.DTOS;
-using Elevate.Progress.Infrastructure.Persistence;
+using Elevate.Progress.Infrastructure.Persistence.ProgressDbContext;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
