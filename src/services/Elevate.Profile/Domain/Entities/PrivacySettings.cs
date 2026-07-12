@@ -5,7 +5,7 @@ namespace Elevate.Profile.Domain.Entities
 {
     public class PrivacySettings
     {
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         
         public ProfileVisibility ProfileVisibility { get; set; }= ProfileVisibility.Private;
 

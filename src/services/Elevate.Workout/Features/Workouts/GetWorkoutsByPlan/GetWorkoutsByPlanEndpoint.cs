@@ -8,7 +8,7 @@ namespace Elevate.Workout.Features.Workouts.GetWorkoutsByPlan
     {
         public static void MapGetWorkoutsByPlanEndpoint(this IEndpointRouteBuilder app)
         {
-            app.MapGet("/api/v1/workouts/by-plan/{planId:int}", async (int planId, [FromServices] IMediator mediator) =>
+            app.MapGet("/api/v1/workouts/by-plan/{planId:int}", async (Guid planId, [FromServices] IMediator mediator) =>
             {
                 var query = new GetWorkoutsByPlanQuery(planId);
 

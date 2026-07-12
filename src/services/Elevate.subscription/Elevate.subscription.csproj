@@ -11,6 +11,8 @@
 
   <ItemGroup>
     <PackageReference Include="MassTransit" Version="9.1.2" />
+    <PackageReference Include="MassTransit.EntityFrameworkCore" Version="8.3.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="9.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.28" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.27" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.28">
@@ -18,11 +20,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
+    <PackageReference Include="RabbitMQ.Client" Version="7.2.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\SharedKernel\SharedKernel.csproj" />
+    <ProjectReference Include="..\Elevate.Auth\Elevate.Auth.csproj" />
   </ItemGroup>
 
 </Project>

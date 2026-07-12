@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Elevate.Workout.Migrations
 {
     [DbContext(typeof(WorkOutDbContext))]
-    [Migration("20260710053427_WorkoutExerciseCatalogItemTable")]
-    partial class WorkoutExerciseCatalogItemTable
+    [Migration("20260712054525_intial-Create-AfetrdropDB")]
+    partial class intialCreateAfetrdropDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -115,8 +115,8 @@ namespace Elevate.Workout.Migrations
                     b.Property<int>("OrderIndex")
                         .HasColumnType("int");
 
-                    b.Property<int>("WorkoutPlanId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("WorkoutPlanId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("WorkoutId");
 
@@ -186,11 +186,9 @@ namespace Elevate.Workout.Migrations
 
             modelBuilder.Entity("Elevate.Workout.Domain.Entities.WorkoutPlan", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()

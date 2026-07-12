@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Elevate.Profile.Infrastructure.Migrations
+namespace Elevate.Profile.Migrations
 {
     /// <inheritdoc />
-    public partial class ProfileIntialCreation : Migration
+    public partial class RefactorPKtoGuidrestructureIDS : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,7 @@ namespace Elevate.Profile.Infrastructure.Migrations
                 name: "UsersProfile",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
@@ -33,7 +33,7 @@ namespace Elevate.Profile.Infrastructure.Migrations
                 name: "NotificationSettings",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     WorkoutReminders = table.Column<bool>(type: "bit", nullable: false),
                     MealReminders = table.Column<bool>(type: "bit", nullable: false),
                     AchievementAlerts = table.Column<bool>(type: "bit", nullable: false),
@@ -56,7 +56,7 @@ namespace Elevate.Profile.Infrastructure.Migrations
                 name: "PrivacySettings",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProfileVisibility = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ShowProgressToFriends = table.Column<bool>(type: "bit", nullable: false),
                     AllowDataSharing = table.Column<bool>(type: "bit", nullable: false)
@@ -76,7 +76,7 @@ namespace Elevate.Profile.Infrastructure.Migrations
                 name: "UserPreferences",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Language = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Theme = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     WeightUnit = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),

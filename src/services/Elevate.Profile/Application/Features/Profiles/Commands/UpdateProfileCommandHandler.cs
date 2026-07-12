@@ -1,4 +1,4 @@
-﻿using Elevate.Profile.Application.Common;
+using Elevate.Profile.Application.Common;
 using Elevate.Profile.Domain.Entities;
 using Elevate.Profile.Domain.Exceptions;
 using Elevate.Profile.Domain.Interfaces;
@@ -42,9 +42,9 @@ namespace Elevate.Profile.Application.Features.Profiles.Commands
                 throw new ConflictException("AUTH_EMAIL_EXISTS.");
 
             FullName fullName = new(request.firstName, request.lastName);
-            Email email = new(request.email);
+            Email Email = new(request.email);
 
-            profile.UpdateProfile(fullName, email, request.phoneNumber);
+            profile.UpdateProfile(fullName, Email, request.phoneNumber);
 
             await _unitOfWork.ExecuteAsync(async () =>
             {
@@ -52,5 +52,4 @@ namespace Elevate.Profile.Application.Features.Profiles.Commands
             });
         }
     }
-
 }

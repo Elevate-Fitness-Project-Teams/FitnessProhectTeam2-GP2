@@ -17,7 +17,21 @@ namespace Elevate.subscription.Domain.Entities
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
 
+        public static UserSubscription CreateFreeTrial(Guid userId, int trialDays = 14)
+        {
+            var now = DateTime.UtcNow;
 
+            return new UserSubscription
+            {
+                Id = Guid.NewGuid(),
+                UserId = userId,
+                Tier = SubscriptionTier.Free, 
+                Status = SubscriptionStatus.Active,
+                ExpiresAt = now.AddDays(trialDays),
+                AutoRenew = false,
+                CreatedAt = now
+            };
+         }   
         public static UserSubscription CreatePremium(Guid userId, int durationMonths)
         {
             var now = DateTime.UtcNow;

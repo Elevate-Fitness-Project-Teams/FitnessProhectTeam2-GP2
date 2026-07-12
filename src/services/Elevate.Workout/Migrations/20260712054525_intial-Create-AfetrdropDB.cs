@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Elevate.Workout.Migrations
 {
     /// <inheritdoc />
-    public partial class intialWorkoutmigration : Migration
+    public partial class intialCreateAfetrdropDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,8 +32,7 @@ namespace Elevate.Workout.Migrations
                 name: "WorkoutPlans",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     Difficulty = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -73,7 +72,7 @@ namespace Elevate.Workout.Migrations
                     Difficulty = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EstimatedDurationInMinutes = table.Column<int>(type: "int", nullable: false),
                     OrderIndex = table.Column<int>(type: "int", nullable: false),
-                    WorkoutPlanId = table.Column<int>(type: "int", nullable: false)
+                    WorkoutPlanId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,8 +93,7 @@ namespace Elevate.Workout.Migrations
                     WorkoutSessionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ExerciseName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Order = table.Column<int>(type: "int", nullable: false),
-                    ExerciseId = table.Column<int>(type: "int", nullable: false),
-                    WorkoutId = table.Column<int>(type: "int", nullable: true)
+                    ExerciseId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -112,11 +110,33 @@ namespace Elevate.Workout.Migrations
                         principalTable: "WorkoutSessions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WorkoutExerciseCatalogItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WorkoutId = table.Column<int>(type: "int", nullable: false),
+                    ExerciseId = table.Column<int>(type: "int", nullable: false),
+                    OrderIndex = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkoutExerciseCatalogItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_WorkoutExercises_Workouts_WorkoutId",
+                        name: "FK_WorkoutExerciseCatalogItems_Exercises_ExerciseId",
+                        column: x => x.ExerciseId,
+                        principalTable: "Exercises",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_WorkoutExerciseCatalogItems_Workouts_WorkoutId",
                         column: x => x.WorkoutId,
                         principalTable: "Workouts",
-                        principalColumn: "WorkoutId");
+                        principalColumn: "WorkoutId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -148,14 +168,19 @@ namespace Elevate.Workout.Migrations
                 column: "WorkoutExerciseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WorkoutExercises_ExerciseId",
-                table: "WorkoutExercises",
+                name: "IX_WorkoutExerciseCatalogItems_ExerciseId",
+                table: "WorkoutExerciseCatalogItems",
                 column: "ExerciseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WorkoutExercises_WorkoutId",
+                name: "IX_WorkoutExerciseCatalogItems_WorkoutId_OrderIndex",
+                table: "WorkoutExerciseCatalogItems",
+                columns: new[] { "WorkoutId", "OrderIndex" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkoutExercises_ExerciseId",
                 table: "WorkoutExercises",
-                column: "WorkoutId");
+                column: "ExerciseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WorkoutExercises_WorkoutSessionId",
@@ -180,16 +205,19 @@ namespace Elevate.Workout.Migrations
                 name: "ExerciseSets");
 
             migrationBuilder.DropTable(
+                name: "WorkoutExerciseCatalogItems");
+
+            migrationBuilder.DropTable(
                 name: "WorkoutExercises");
+
+            migrationBuilder.DropTable(
+                name: "Workouts");
 
             migrationBuilder.DropTable(
                 name: "Exercises");
 
             migrationBuilder.DropTable(
                 name: "WorkoutSessions");
-
-            migrationBuilder.DropTable(
-                name: "Workouts");
 
             migrationBuilder.DropTable(
                 name: "WorkoutPlans");

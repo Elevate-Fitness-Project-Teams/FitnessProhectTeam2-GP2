@@ -6,7 +6,7 @@ namespace Elevate.Workout.Domain.Entities
     {
         private WorkoutPlan() { }
 
-        public int Id { get; private set; }
+        public Guid Id { get; private set; }
         public string Name { get; private set; } = string.Empty;
         public string Description { get; private set; } = string.Empty; 
         public DifficultyLevel Difficulty { get; private set; } 

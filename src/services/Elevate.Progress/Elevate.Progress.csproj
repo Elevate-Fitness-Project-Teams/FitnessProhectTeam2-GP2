@@ -49,6 +49,9 @@
   <ItemGroup>
     <Folder Include="Features\LogWorkoutCompletion\Validators\" />
     <Folder Include="Integration\Consumers\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Domain\" />
+    <Folder Include="Infrastructure\" />
   </ItemGroup>
 
 </Project>

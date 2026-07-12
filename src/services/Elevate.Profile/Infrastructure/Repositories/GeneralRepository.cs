@@ -16,7 +16,7 @@ namespace Elevate.Profile.Infrastructure.Repositories
             return _context.Set<T>();
         }
 
-        public async Task<T?> GetById(int id)
+        public async Task<T?> GetById(Guid id)
         {
             return await _context.Set<T>().FindAsync(id);
         }

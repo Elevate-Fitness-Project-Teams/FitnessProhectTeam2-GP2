@@ -1,9 +1,13 @@
+using AuthService.Infrastructure.Persistence;
+using Elevate.Auth.Domain.DomainEvents;
 using Elevate.Auth.Domain.Entities;
 using Elevate.Auth.Domain.Errors;
 using Elevate.Auth.Domain.ValueObjects;
 using Elevate.Auth.Infrastructure.Identity;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SharedKernel;
 using System;
 using System.Linq;
@@ -13,9 +17,12 @@ using System.Threading.Tasks;
 namespace Elevate.Auth.Features.Register;
 
 public sealed class RegisterCommandHandler(
-    UserManager<AppUser> userManager)
+    UserManager<AppUser> userManager ,IPublishEndpoint publishEndpoint ,AuthDbContext authDb)
     : IRequestHandler<RegisterCommand, Result<RegisterResponse>>
 {
+    private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
+    private readonly AuthDbContext _authDb = authDb;
+
     public async Task<Result<RegisterResponse>> Handle(RegisterCommand cmd, CancellationToken ct)
     {
         var existingUser = await userManager.FindByEmailAsync(cmd.Email);
@@ -46,7 +53,20 @@ public sealed class RegisterCommandHandler(
             emailResult.Value,
             cmd.PhoneNumber,
             now);
-
+        //messaging with Profile servie 
+        using var transaction = await _authDb.Database.BeginTransactionAsync(ct);
+        try
+        {
+            await publishEndpoint.Publish(new UserRegisteredEvent(
+            UserId: user.Id,
+            Email: emailResult.Value,
+            FirstName: cmd.FirstName,
+            LastName: cmd.LastName,
+            PhoneNumber: cmd.PhoneNumber,
+            OccurredAt: now
+        ), ct);
+        
+        
         var identityResult = await userManager.CreateAsync(user, cmd.Password);
         if (!identityResult.Succeeded)
         {
@@ -57,9 +77,18 @@ public sealed class RegisterCommandHandler(
                 ErrorType.Validation));
         }
 
+        await transaction.CommitAsync(ct);
+
         return Result.Success(new RegisterResponse(
             user.Id,
             user.Email!,
             true));
     }
+        catch (Exception)
+        {
+            await transaction.RollbackAsync(ct);
+            throw;
+        }
+    }
+    
 }

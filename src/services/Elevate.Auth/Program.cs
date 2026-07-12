@@ -7,6 +7,7 @@ using Elevate.Auth.Infrastructure;
 using Elevate.Auth.Infrastructure.Identity;
 using Elevate.Auth.Infrastructure.Presistence.Interfaces;
 using Elevate.Auth.Infrastructure.Services;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -48,7 +49,20 @@ namespace Elevate.Auth
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddMassTransit(x =>
+            {
+                x.AddEntityFrameworkOutbox<AuthDbContext>(o =>
+                {
+                    o.UseSqlServer(); 
+                    o.UseBusOutbox();
+                });
 
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host("rabbitmq", "/", h => { });
+                    cfg.ConfigureEndpoints(context);
+                });
+            });
             var app = builder.Build();
             using (var scope = app.Services.CreateScope())
             {

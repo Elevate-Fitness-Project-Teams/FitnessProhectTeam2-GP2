@@ -69,7 +69,7 @@ public sealed class AppUser
         user.IsActive = true;
 
         user.AddDomainEvent(
-            new UserRegisteredEvent(user.Id, email, now));
+            new UserRegisteredEvent(user.Id, email, name.FirstName,name.LastName, phone, now));
 
         return user;
     }

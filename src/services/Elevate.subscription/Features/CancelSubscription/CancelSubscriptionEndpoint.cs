@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using SharedKernel;
 using SharedKernel.Interfaces;
 
@@ -10,9 +11,9 @@ namespace Elevate.subscription.Features.CancelSubscription
         {
             app.MapPost("/api/v1/subscription/cancel", async (
                 ICurrentUserService currentUser,
-                IMediator mediator) =>
+               [FromServices] IMediator mediator,CancellationToken ct) =>
             {
-                var result = await mediator.Send(new CancelSubscriptionCommand(currentUser.UserId));
+                var result = await mediator.Send(new CancelSubscriptionCommand(currentUser.UserId,ct));
 
                 if (result.IsSuccess)
                     return Results.Ok(ApiResponse<CancelSubscriptionResponse>.Success(result.Value));
