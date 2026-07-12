@@ -1,12 +1,12 @@
 ﻿using Elevate.Progress.Features.LogWorkoutCompletion.DTOS;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Elevate.Progress.Features.LogWorkoutCompletion.Command
 {
-    public record EvaluateUserAchievementsCommand(EvaluateUserAchievementsRequestDto RequestDto)
+    public record EvaluateUserAchievementsCommand(
+        EvaluateUserAchievementsRequestDto RequestDto)
         : IRequest<EvaluateUserAchievementsResponseDto>;
+
 
     public class EvaluateUserAchievementsCommandHandler
         : IRequestHandler<EvaluateUserAchievementsCommand, EvaluateUserAchievementsResponseDto>
@@ -15,25 +15,16 @@ namespace Elevate.Progress.Features.LogWorkoutCompletion.Command
             EvaluateUserAchievementsCommand request,
             CancellationToken cancellationToken)
         {
-            // TODO: future logic (calculate achievements)
+        
 
-            var newAchievements = new List<Guid>(); // هيتبني بعدين
-
-            var result = new EvaluateUserAchievementsResponseDto
+            var response = new EvaluateUserAchievementsResponseDto
             {
                 Success = true,
-                NewAchievementsCount = newAchievements.Count,
-                NewAchievementIds = newAchievements
+                NewAchievementsCount = 0,
+                NewAchievementIds = new List<Guid>()
             };
 
-            // Trigger notification later
-            if (newAchievements.Any())
-            {
-                // TODO: Publish event -> Notification Service
-                // e.g. AchievementEarnedEvent
-            }
-
-            return result;
+            return await Task.FromResult(response);
         }
     }
 }
