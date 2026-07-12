@@ -1,4 +1,5 @@
 ﻿using Elevate.FitnessCalculation.Domain.Enums;
+using Elevate.FitnessCalculation.Domain.ValueObjects;
 
 namespace Elevate.FitnessCalculation.Domain.Entities
 {
@@ -8,11 +9,7 @@ namespace Elevate.FitnessCalculation.Domain.Entities
 
         public int UserId { get; private set; }
 
-        public double Weight { get; private set; }
-
-        public double Height { get; private set; }
-
-        public int Age { get; private set; }
+        public BodyMetrics BodyMetrics { get; set; }
 
         public Gender Gender { get; private set; }
 
@@ -21,24 +18,20 @@ namespace Elevate.FitnessCalculation.Domain.Entities
         public ActivityLevel ActivityLevel { get; private set; }
 
         public DateTime RecordedAt { get; private set; }
+        // Navigation Property
+        public CalculatedMetrics? CalculatedMetrics { get; set; }
 
         private UserFitnessStats() { } // Required by EF Core
 
         private UserFitnessStats(
             int userId,
-            double weight,
-            double height,
-            int age,
+          BodyMetrics bodyMetrics,
             Gender gender,
             Goal goal,
             ActivityLevel activityLevel)
         {
-           
-
             UserId = userId;
-            Weight = weight;
-            Height = height;
-            Age = age;
+            BodyMetrics = bodyMetrics;
             Gender = gender;
             Goal = goal;
             ActivityLevel = activityLevel;
@@ -47,18 +40,14 @@ namespace Elevate.FitnessCalculation.Domain.Entities
 
         public static UserFitnessStats Create(
             int userId,
-            double weight,
-            double height,
-            int age,
+            BodyMetrics bodyMetrics,
             Gender gender,
             Goal goal,
             ActivityLevel activityLevel)
         {
             return new UserFitnessStats(
                 userId,
-                weight,
-                height,
-                age,
+                bodyMetrics,
                 gender,
                 goal,
                 activityLevel);

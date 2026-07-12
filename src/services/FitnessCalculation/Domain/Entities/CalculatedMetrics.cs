@@ -10,5 +10,6 @@ namespace Elevate.FitnessCalculation.Domain.Entities
         public MetabolicMetrics metabolic { get; set; }
         public Status Status { get; set; }
         public DateTime CalculatedAt { get; set; }
+        public UserFitnessStats UserFitnessStats { get; private set; } = null!;
     }
 }

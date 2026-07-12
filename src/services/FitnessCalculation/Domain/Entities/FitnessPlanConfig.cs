@@ -6,13 +6,13 @@ namespace Elevate.FitnessCalculation.Domain.Entities
     public class FitnessPlanConfig
     {
         public string PlanId { get; set; }
-        public string PlanName { get; set; }
-        public string Description { get; set; }
+        public string PlanName { get; set; } = null!;
+        public string? Description { get; set; }
         public Goal Goal { get; set; }
         public Status status { get; set; }
         public CaloriesRange caloriesRange { get; set; }
         public PlanConfigration planConfigration { get; set; }
-
+        public ICollection<UserAssignedPlans> Plans { get; set; } = [];
 
         private FitnessPlanConfig() { }
 
