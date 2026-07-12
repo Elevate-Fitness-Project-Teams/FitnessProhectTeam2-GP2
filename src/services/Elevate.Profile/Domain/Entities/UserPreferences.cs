@@ -5,7 +5,7 @@ namespace Elevate.Profile.Domain.Entities
 {
     public class UserPreferences
     {
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         [MaxLength(10)]
         public Language Language { get; set; } = Language.en;
         [MaxLength(15)]

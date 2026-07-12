@@ -2,7 +2,7 @@
 {
     public class NotificationSettings
     {
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public bool WorkoutReminders { get; set; } = true;
 
         public bool MealReminders { get; set; } = true;

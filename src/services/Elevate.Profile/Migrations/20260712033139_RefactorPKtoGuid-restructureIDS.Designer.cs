@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Elevate.Profile.Infrastructure.Migrations
+namespace Elevate.Profile.Migrations
 {
     [DbContext(typeof(ProfileDbContext))]
-    [Migration("20260710000547_ProfileIntialCreation")]
-    partial class ProfileIntialCreation
+    [Migration("20260712033139_RefactorPKtoGuid-restructureIDS")]
+    partial class RefactorPKtoGuidrestructureIDS
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,8 +27,8 @@ namespace Elevate.Profile.Infrastructure.Migrations
 
             modelBuilder.Entity("Elevate.Profile.Domain.Entities.NotificationSettings", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("AchievementAlerts")
                         .HasColumnType("bit");
@@ -55,8 +55,8 @@ namespace Elevate.Profile.Infrastructure.Migrations
 
             modelBuilder.Entity("Elevate.Profile.Domain.Entities.PrivacySettings", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("AllowDataSharing")
                         .HasColumnType("bit");
@@ -75,8 +75,8 @@ namespace Elevate.Profile.Infrastructure.Migrations
 
             modelBuilder.Entity("Elevate.Profile.Domain.Entities.UserPreferences", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("DistanceUnit")
                         .IsRequired()
@@ -110,8 +110,8 @@ namespace Elevate.Profile.Infrastructure.Migrations
 
             modelBuilder.Entity("Elevate.Profile.Domain.Entities.UserProfile", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsPremiumCached")
                         .HasColumnType("bit");
@@ -169,8 +169,8 @@ namespace Elevate.Profile.Infrastructure.Migrations
                 {
                     b.OwnsOne("Elevate.Profile.Domain.ValueObjects.Email", "Email", b1 =>
                         {
-                            b1.Property<int>("UserProfileUserId")
-                                .HasColumnType("int");
+                            b1.Property<Guid>("UserProfileUserId")
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
@@ -188,8 +188,8 @@ namespace Elevate.Profile.Infrastructure.Migrations
 
                     b.OwnsOne("Elevate.Profile.Domain.ValueObjects.FullName", "Name", b1 =>
                         {
-                            b1.Property<int>("UserProfileUserId")
-                                .HasColumnType("int");
+                            b1.Property<Guid>("UserProfileUserId")
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("FirstName")
                                 .IsRequired()

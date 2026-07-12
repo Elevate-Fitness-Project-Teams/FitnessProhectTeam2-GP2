@@ -30,7 +30,22 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
+  # --- RabbitMQ Message Broker ---
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    container_name: elevate-rabbitmq
+    restart: unless-stopped
+    ports:
+      - "5672:5672"   
+      - "15672:15672" #  Management Dashboard 
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "check_running"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   # --- Auth Microservice ---
   elevate.auth:
     build:
@@ -41,7 +56,9 @@ services:
     restart: unless-stopped
     ports:
       - "5007:8080"
-
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
   # --- Nutrition Microservice ---
   nutrition-api:
     build:
@@ -80,7 +97,9 @@ services:
     build:
       context: .
       dockerfile: src/services/Elevate.Profile/Dockerfile
-
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
   elevate.progress:
     image: elevate.progress
     build:

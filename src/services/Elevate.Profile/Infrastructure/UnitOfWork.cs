@@ -1,4 +1,5 @@
 ﻿using Elevate.Profile.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Elevate.Profile.Infrastructure
@@ -51,6 +52,11 @@ namespace Elevate.Profile.Infrastructure
                     _transaction = null;
                 }
             }
+        }
+
+        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

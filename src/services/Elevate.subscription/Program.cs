@@ -1,7 +1,9 @@
-
 using Elevate.subscription.Infrastructure.Common.Interfaces;
 using Elevate.subscription.Infrastructure.Presistence.Extension;
 using Elevate.subscription.Infrastructure.Services;
+using Elevate.Subscription.Infrastructure.Persistence;
+using MassTransit;
+using MassTransit.RabbitMqTransport;
 using SharedKernel.Extension.DependencyInjection;
 
 namespace Elevate.subscription
@@ -20,7 +22,19 @@ namespace Elevate.subscription
             builder.Services.AddSwaggerGen();
             builder.Services.AddSubscriptionInfrastructure(builder.Configuration);
             builder.Services.AddEndpoints(typeof(Program).Assembly);
-            builder.Services.AddScoped<IBillingSimulator, BillingSimulator>();
+
+            builder.Services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host("rabbitmq", "/", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
+                    cfg.ConfigureEndpoints(context);
+                });
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

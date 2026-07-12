@@ -19,11 +19,11 @@ namespace Elevate.Profile.Application.Features.Profiles.Commands
             this.currentUser = currentUser;
            _unitOfWork = unitOfWork;
         }
-        public async Task<Unit> Handle(UpdateProfileCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateProfileCommand request, CancellationToken cancellationToken)
         {
             var userId = currentUser.UserId;
             //Get Profile
-            var profile =await _repository.GetById(userId!.Value);
+            var profile = await _repository.GetById(userId!.Value);
             if (profile == null)
             {
                 throw new NotFoundException($"Profile with id {userId} not found.");
@@ -38,7 +38,7 @@ namespace Elevate.Profile.Application.Features.Profiles.Commands
             }
 
 
-            FullName fullName=new (request.firstName , request.lastName);
+            FullName fullName = new(request.firstName, request.lastName);
             Email Email = new(request.email);
             profile.UpdateProfile(fullName, Email, request.phoneNumber);
 
@@ -46,9 +46,8 @@ namespace Elevate.Profile.Application.Features.Profiles.Commands
             {
                 _repository.Update(profile);
             });
-
-            return Unit.Value;
-
         }
+
+
     }
 }

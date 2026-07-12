@@ -5,7 +5,7 @@ namespace Elevate.Profile.Domain.Entities
 {
     public class UserProfile
     {
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public FullName Name { get; private set; }= null!;
 
         public Email Email { get; set; }=null!;
@@ -30,7 +30,7 @@ namespace Elevate.Profile.Domain.Entities
         }
 
         private UserProfile(
-            int userId, 
+            Guid userId, 
             FullName name, 
             Email email, 
             string phoneNumber, 
@@ -46,7 +46,7 @@ namespace Elevate.Profile.Domain.Entities
         }
 
         public static UserProfile Create(
-        int userId,
+        Guid userId,
         FullName name,
         Email email,
         string phoneNumber,
@@ -86,6 +86,10 @@ namespace Elevate.Profile.Domain.Entities
         public void UpdatePrivacySettings(PrivacySettings privacySettings)
         {
             PrivacySettings = privacySettings;
+        }
+        public void UpdatePremiumStatus(bool isPremium)
+        {
+            IsPremiumCached = isPremium;
         }
 
 

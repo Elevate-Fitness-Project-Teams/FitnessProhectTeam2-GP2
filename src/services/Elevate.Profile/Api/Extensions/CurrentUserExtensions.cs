@@ -13,7 +13,7 @@ namespace Elevate.Profile.Api.Extensions
                 var currentUser = context.RequestServices.GetRequiredService<ICurrentUserInitializer>();
                 var id = user.FindFirstValue(ClaimTypes.NameIdentifier);
                 if (currentUser.UserId is null &&
-                    int.TryParse(id, out var userId))
+                    Guid.TryParse(id, out var userId))
                 {
                     currentUser.UserId = userId;
                 }
