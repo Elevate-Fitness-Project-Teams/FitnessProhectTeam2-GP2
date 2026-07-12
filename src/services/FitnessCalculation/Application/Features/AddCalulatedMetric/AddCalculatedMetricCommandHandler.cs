@@ -1,4 +1,5 @@
-﻿using Elevate.FitnessCalculation.Domain.Entities;
+﻿using Elevate.FitnessCalculation.Application.Features.DTOS;
+using Elevate.FitnessCalculation.Domain.Entities;
 using Elevate.FitnessCalculation.Domain.Enums;
 using Elevate.FitnessCalculation.Domain.ValueObjects;
 using Elevate.Profile.Domain.Interfaces;
@@ -7,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Elevate.FitnessCalculation.Application.Features.AddCalulatedMetric
 {
-    public class AddCalculatedMetricCommandHandler : IRequestHandler<AddCalculatedMetricCommand>
+    public class AddCalculatedMetricCommandHandler : IRequestHandler<AddCalculatedMetricCommand, AddCalulatedMericsDTO>
     {
         private readonly IGeneralRepository<CalculatedMetrics> _repository;
         private readonly IUnitOfWork _unitOfWork;
@@ -17,7 +18,7 @@ namespace Elevate.FitnessCalculation.Application.Features.AddCalulatedMetric
            _repository = repository;
             _unitOfWork = unitOfWork;
         }
-        public async Task<Unit> Handle(AddCalculatedMetricCommand request, CancellationToken cancellationToken)
+        public async Task<AddCalulatedMericsDTO> Handle(AddCalculatedMetricCommand request, CancellationToken cancellationToken)
         {
             Status status = request.calorieTarget switch
             {
@@ -54,7 +55,16 @@ namespace Elevate.FitnessCalculation.Application.Features.AddCalulatedMetric
                 }
             });
 
-            return Unit.Value;
+            return new AddCalulatedMericsDTO()
+            {
+                UserId = metrics.UserId,
+                Bmr = metrics.Metabolic.Bmr,
+                Tdee = metrics.Metabolic.Tdee,
+                CalorieTarget = metrics.Metabolic.CalorieTarget,
+                Status = metrics.Status.ToString(),
+                CalculatedAt = metrics.CalculatedAt
+            };
         }
+
     }
 }

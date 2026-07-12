@@ -38,12 +38,7 @@ namespace Elevate.Profile.Api.Controllers
            await _mediator.Send(new UpdateProfileCommand(firstName, LastName, Email, PhoneNumber));
            return Ok();
         }
-        [HttpPut("change-password")]
-        public async Task<IActionResult> UpdatePassword(string currentPassword, string newPassword, string confirmPassword)
-        {
-            await _mediator.Send(new ChangePasswordCommand(currentPassword, newPassword, confirmPassword));
-            return Ok();
-        }
+        
 
         [HttpGet("view-settings")]
         public async Task<IActionResult> GetViewSettings(CancellationToken cancellationToken)

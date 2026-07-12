@@ -1,5 +1,7 @@
-﻿using Elevate.FitnessCalculation.Application.Features.CalculateFitness;
+﻿using Elevate.FitnessCalculation.Application.Features.AddUserFitnessStats;
+using Elevate.FitnessCalculation.Application.Features.CalculateFitness;
 using Elevate.FitnessCalculation.Application.Features.DTOS;
+using Elevate.FitnessCalculation.Application.Features.GetAllConfigPlans;
 using Elevate.FitnessCalculation.Application.Features.GetFitnessStats;
 using Elevate.FitnessCalculation.Application.Features.GetMetricCalc;
 using Elevate.FitnessCalculation.Application.Features.GetPlanConfig;
@@ -18,6 +20,16 @@ namespace Elevate.FitnessCalculation.Api.Controller
         {
             _mediator = mediator;
         }
+
+        [HttpPost("weight-goal-activity")]
+        public async Task<IActionResult> CalculateWeightGoalActivity(
+            [FromBody] AddUserFitnessStatsCommand command,
+            CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+            return Ok(result);
+        }
+
 
         [HttpPost("calculate")]
         public async Task<IActionResult> CalculateFitness(
@@ -48,6 +60,13 @@ namespace Elevate.FitnessCalculation.Api.Controller
         {
             var result = await _mediator.Send(new GetPlanConfigQuery(planId));
 
+            return Ok(result);
+        }
+
+        [HttpGet("plan-configs")]
+        public async Task<IActionResult> GetAllPlans()
+        {
+            var result = await _mediator.Send(new GetAllConfigPlansQuery());
             return Ok(result);
         }
 

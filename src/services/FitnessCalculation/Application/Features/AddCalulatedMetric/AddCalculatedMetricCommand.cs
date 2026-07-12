@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Elevate.FitnessCalculation.Application.Features.DTOS;
+using MediatR;
 
 namespace Elevate.FitnessCalculation.Application.Features.AddCalulatedMetric
 {
@@ -7,6 +8,6 @@ namespace Elevate.FitnessCalculation.Application.Features.AddCalulatedMetric
             double bmr,
             double tdee,
             double calorieTarget
-            ) : IRequest;
+            ) : IRequest<AddCalulatedMericsDTO>;
   
 }
