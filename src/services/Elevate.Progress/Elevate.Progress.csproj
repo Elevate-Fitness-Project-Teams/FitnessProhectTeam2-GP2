@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -7,14 +7,48 @@
     <UserSecretsId>bec92560-759c-48a6-9445-7f94562f9b96</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
+    <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Domain\NewFolder\**" />
+    <Content Remove="Domain\NewFolder\**" />
+    <EmbeddedResource Remove="Domain\NewFolder\**" />
+    <None Remove="Domain\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="8.1.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.28" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.17" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.17">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.17">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.3" />
+    <PackageReference Include="RabbitMQ.Client" Version="7.2.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="D:\Elevate\Project02\FitnessApp\src\services\Elevate.Progress\Shared\Exceptions\.editorconfig" />
+    <None Include="Domain\Entities\UserAchievement.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="D:\Elevate\Project02\FitnessApp\src\services\Elevate.Progress\Shared\Exceptions\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\LogWorkoutCompletion\Validators\" />
+    <Folder Include="Integration\Consumers\" />
     <Folder Include="Controllers\" />
     <Folder Include="Domain\" />
     <Folder Include="Infrastructure\" />
