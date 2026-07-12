@@ -1,4 +1,5 @@
 ﻿using Elevate.FitnessCalculation.Domain.Enums;
+using Elevate.FitnessCalculation.Domain.Exceptions;
 using Elevate.FitnessCalculation.Domain.ValueObjects;
 
 namespace Elevate.FitnessCalculation.Domain.Entities
@@ -30,6 +31,14 @@ namespace Elevate.FitnessCalculation.Domain.Entities
             Goal goal,
             ActivityLevel activityLevel)
         {
+            if (!Enum.IsDefined(gender))
+                throw new DomainValidException("VAL_INVALID_GENDER");
+
+            if (!Enum.IsDefined(goal))
+                throw new DomainValidException("VAL_INVALID_GOAL");
+
+            if (!Enum.IsDefined(activityLevel))
+                throw new DomainValidException("VAL_INVALID_ACTIVITY");
             UserId = userId;
             BodyMetrics = bodyMetrics;
             Gender = gender;
@@ -53,6 +62,7 @@ namespace Elevate.FitnessCalculation.Domain.Entities
                 activityLevel);
         }
 
+        //public static 
 
     } 
 }

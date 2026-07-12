@@ -1,4 +1,5 @@
 ﻿using Elevate.FitnessCalculation.Domain.Enums;
+using Elevate.FitnessCalculation.Domain.Exceptions;
 
 namespace Elevate.FitnessCalculation.Domain.ValueObjects
 {
@@ -10,22 +11,20 @@ namespace Elevate.FitnessCalculation.Domain.ValueObjects
 
         public int Age { get; }
 
-       
-
         private BodyMetrics(
             double weight,
             double height,
             int age
             )
         {
-            if (weight <= 0)
-                throw new ArgumentOutOfRangeException(nameof(weight));
+            if (weight <40 || weight>250)
+                throw new DomainValidException("VAL_INVALID_Weight");
 
-            if (height <= 0)
-                throw new ArgumentOutOfRangeException(nameof(height));
+            if (height < 140 || height > 220)
+                throw new DomainValidException("VAL_INVALID_HEIGHT");
 
-            if (age <= 0)
-                throw new ArgumentOutOfRangeException(nameof(age));
+            if (age < 16 || age > 100)
+                throw new DomainValidException("VAL_INVALID_AGE");
 
             Weight = weight;
             Height = height;

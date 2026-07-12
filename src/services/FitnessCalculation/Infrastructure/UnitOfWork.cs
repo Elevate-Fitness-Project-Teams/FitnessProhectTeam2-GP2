@@ -1,15 +1,16 @@
-﻿using Elevate.Profile.Domain.Interfaces;
+﻿using Elevate.FitnessCalculation.Infrastructure;
+using Elevate.Profile.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Elevate.Profile.Infrastructure
 {
     public class UnitOfWork: IUnitOfWork
     {
-        private readonly ProfileDbContext _dbContext;
+        private readonly FitnessCalcDbContext _dbContext;
         private IDbContextTransaction? _transaction;
         private int _depth;
 
-        public UnitOfWork(ProfileDbContext dbContext)
+        public UnitOfWork(FitnessCalcDbContext dbContext)
         {
             _dbContext = dbContext;
         }

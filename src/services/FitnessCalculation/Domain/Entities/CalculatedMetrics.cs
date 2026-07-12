@@ -1,15 +1,48 @@
-﻿using Elevate.FitnessCalculation.Domain.Enums;
+﻿using Elevate.FitnessCalculation.Domain.Entities;
+using Elevate.FitnessCalculation.Domain.Enums;
 using Elevate.FitnessCalculation.Domain.ValueObjects;
 
-namespace Elevate.FitnessCalculation.Domain.Entities
+public class CalculatedMetrics
 {
-    public class CalculatedMetrics
-    {
-        public int Id { get; set; }
-        public int UserId { get; set; }
-        public MetabolicMetrics metabolic { get; set; }
-        public Status Status { get; set; }
-        public DateTime CalculatedAt { get; set; }
+        public int Id { get; private set; }
+
+        public int UserId { get; private set; }
+
+        public MetabolicMetrics Metabolic { get; private set; }
+
+        public Status Status { get; private set; }
+
+        public DateTime CalculatedAt { get; private set; }
+
         public UserFitnessStats UserFitnessStats { get; private set; } = null!;
-    }
+
+        private CalculatedMetrics() { } // EF
+
+        private CalculatedMetrics(
+            int userId,
+            MetabolicMetrics metabolic,
+            Status status)
+        {
+            UserId = userId;
+            Metabolic = metabolic;
+            Status = status;
+            CalculatedAt = DateTime.UtcNow;
+        }
+
+        public static CalculatedMetrics Create(
+            int userId,
+            MetabolicMetrics metabolic,
+            Status status)
+        {
+            return new CalculatedMetrics(userId, metabolic, status);
+        }
+
+        public void Update(
+            MetabolicMetrics metabolic,
+            Status status)
+        {
+            Metabolic = metabolic;
+            Status = status;
+            CalculatedAt = DateTime.UtcNow;
+        }
 }
