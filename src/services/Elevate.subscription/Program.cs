@@ -1,4 +1,5 @@
 using Elevate.subscription.Infrastructure.Common.Interfaces;
+using Elevate.subscription.Infrastructure.Consumers;
 using Elevate.subscription.Infrastructure.Presistence.Extension;
 using Elevate.subscription.Infrastructure.Services;
 using Elevate.Subscription.Infrastructure.Persistence;
@@ -25,6 +26,8 @@ namespace Elevate.subscription
 
             builder.Services.AddMassTransit(x =>
             {
+                x.AddConsumer<UserRegisteredConsumer>();
+
                 x.UsingRabbitMq((context, cfg) =>
                 {
                     cfg.Host("rabbitmq", "/", h =>
@@ -32,6 +35,8 @@ namespace Elevate.subscription
                         h.Username("guest");
                         h.Password("guest");
                     });
+
+                    // 2. السطر ده هو اللي هيكريت الـ Queue بتاعة الـ Subscription ويربطها أوتوماتيك
                     cfg.ConfigureEndpoints(context);
                 });
             });

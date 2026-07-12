@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\SharedKernel\SharedKernel.csproj" />
+    <ProjectReference Include="..\Elevate.Auth\Elevate.Auth.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,6 +3,6 @@ using SharedKernel;
 
 namespace Elevate.Workout.Features.Workouts.GetWorkoutsByPlan
 {
-    public record GetWorkoutsByPlanQuery(int PlanId) :
+    public record GetWorkoutsByPlanQuery(Guid PlanId) :
         IRequest<Result<List<WorkoutByPlanResponse>>>;
 }

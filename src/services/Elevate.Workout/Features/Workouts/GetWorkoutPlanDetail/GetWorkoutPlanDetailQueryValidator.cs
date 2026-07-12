@@ -6,7 +6,7 @@ namespace Elevate.Workout.Features.Workouts.GetWorkoutPlanDetail
     {
         public GetWorkoutPlanDetailQueryValidator()
         {
-            RuleFor(x => x.PlanId).GreaterThan(0);
+            RuleFor(x => x.PlanId).NotEmpty();
         }
     }
 }

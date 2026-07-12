@@ -13,7 +13,7 @@ namespace Elevate.Workout.Domain.Entities
         public DifficultyLevel Difficulty { get; set; }
         public int EstimatedDurationInMinutes { get; set; }
         public int OrderIndex { get; set; }
-        public int WorkoutPlanId { get; set; }
+        public Guid WorkoutPlanId { get; set; }
 
         [ForeignKey(nameof(WorkoutPlanId))]
         public WorkoutPlan WorkoutPlan { get; set; } = null!;

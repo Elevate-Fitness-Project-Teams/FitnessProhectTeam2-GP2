@@ -112,8 +112,8 @@ namespace Elevate.Workout.Migrations
                     b.Property<int>("OrderIndex")
                         .HasColumnType("int");
 
-                    b.Property<int>("WorkoutPlanId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("WorkoutPlanId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("WorkoutId");
 
@@ -183,11 +183,9 @@ namespace Elevate.Workout.Migrations
 
             modelBuilder.Entity("Elevate.Workout.Domain.Entities.WorkoutPlan", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
