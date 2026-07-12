@@ -1,4 +1,4 @@
-﻿using Elevate.Progress.Infrastructure.Persistence;
+﻿using Elevate.Progress.Infrastructure.Persistence.ProgressDbContext;
 using Elevate.Progress.Integration.Clients;
 using Elevate.Progress.Integration.Configuration;
 using Elevate.Progress.Integration.Publishers;
@@ -15,10 +15,8 @@ namespace Elevate.Progress.Extensions
 
             // Database
             services.AddDbContext<ProgressDbContext>(options =>
-                options.UseMySql(
-                    configuration.GetConnectionString("DefaultConnection"),
-                    ServerVersion.AutoDetect(
-                        configuration.GetConnectionString("DefaultConnection"))));
+                options.UseMySql(configuration.GetConnectionString("DefaultConnection"),
+                                   new MySqlServerVersion(new Version(11, 4, 0))));
 
 
             // RabbitMQ Configuration

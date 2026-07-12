@@ -31,6 +31,30 @@ services:
       timeout: 5s
       retries: 5
 
+  # --- MariaDB (Progress DB) ---
+  progress-db:
+    image: mariadb:11.4
+    container_name: elevate-progress-db
+    restart: unless-stopped
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: ElevateProgressDb
+      MYSQL_USER: progress_user
+      MYSQL_PASSWORD: progress_pass
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - progress-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
   # --- Auth Microservice ---
   elevate.auth:
     build:
@@ -63,6 +87,26 @@ services:
       - JwtSettings__Issuer=ElevateAuthService
       - JwtSettings__Audience=ElevateFitnessApp
 
+  # --- Progress Microservice ---
+  elevate.progress:
+    build:
+      context: .
+      dockerfile: src/services/Elevate.Progress/Dockerfile
+    image: elevate.progress
+    container_name: elevate-progress-api
+    restart: unless-stopped
+    ports:
+      - "5005:8080"
+    depends_on:
+      progress-db:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=server=progress-db;port=3306;database=ElevateProgressDb;user=progress_user;password=progress_pass;CharSet=utf8mb4
+      - JwtSettings__Secret=SuperSecretKeyThatIsVeryLongAndSecure123456!
+      - JwtSettings__Issuer=ElevateAuthService
+      - JwtSettings__Audience=ElevateFitnessApp
+
   elevate.fitnesscalculation:
     image: elevate.fitnesscalculation
     build:
@@ -80,12 +124,6 @@ services:
     build:
       context: .
       dockerfile: src/services/Elevate.Profile/Dockerfile
-
-  elevate.progress:
-    image: elevate.progress
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Progress/Dockerfile
 
   elevate.workout:
     image: elevate.workout
@@ -108,11 +146,8 @@ services:
     build:
       context: .
       dockerfile: src/services/Elevate.subscription/Dockerfile
-  
 
 volumes:
   sqlserver-db-data:
   nutrition-db-data:
- 
-  
-
+  progress-db-data:
