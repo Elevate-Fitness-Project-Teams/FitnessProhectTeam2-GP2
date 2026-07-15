@@ -2,7 +2,7 @@
 using Elevate.Progress.Domain.Enums;
 using Elevate.Progress.Features.Exception;
 using Elevate.Progress.Features.LogWorkoutCompletion.DTOS;
-using Elevate.Progress.Infrastructure.Persistence;
+using Elevate.Progress.Infrastructure.Persistence.ProgressDbContext;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

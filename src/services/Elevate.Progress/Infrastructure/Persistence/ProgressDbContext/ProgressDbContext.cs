@@ -1,7 +1,7 @@
 ﻿using Elevate.Progress.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Elevate.Progress.Infrastructure.Persistence
+namespace Elevate.Progress.Infrastructure.Persistence.ProgressDbContext
 {
     public class ProgressDbContext : DbContext
     {
@@ -28,10 +28,10 @@ namespace Elevate.Progress.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProgressDbContext).Assembly);
+
+            base.OnModelCreating(modelBuilder);
         }
-        
+
     }
 }
