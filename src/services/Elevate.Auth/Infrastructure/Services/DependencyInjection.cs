@@ -1,8 +1,10 @@
 ﻿using AuthService.Infrastructure.Persistence;
 using Elevate.Auth.Domain.Entities;
+using Elevate.Auth.Domain.Interfaces;
 using Elevate.Auth.Infrastructure.Identity;
 using Elevate.Auth.Infrastructure.Persistence;
 using Elevate.Auth.Infrastructure.Presistence.Interfaces;
+using Elevate.Auth.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -26,9 +28,10 @@ public static class DependencyInjection
         })
         .AddEntityFrameworkStores<AuthDbContext>()
         .AddDefaultTokenProviders();
+        services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
         services.AddScoped<ITokenService, TokenService>();
-
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
         return services;
     }
 }

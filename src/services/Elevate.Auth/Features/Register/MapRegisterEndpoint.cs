@@ -17,10 +17,10 @@ public static class RegisterEndpoint
             CancellationToken ct) =>
         {
             var command = new RegisterCommand(
-                request.Email,
-                request.Password,
                 request.FirstName,
                 request.LastName,
+                request.Email,
+                request.Password,
                 request.PhoneNumber);
 
             var result = await mediator.Send(command, ct);

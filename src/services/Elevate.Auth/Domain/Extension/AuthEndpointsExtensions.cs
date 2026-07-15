@@ -1,4 +1,5 @@
 ﻿using Elevate.Auth.Features.CompleteProfile;
+using Elevate.Auth.Features.ForgotPassword;
 using Elevate.Auth.Features.Login;
 using Elevate.Auth.Features.Logout;
 using Elevate.Auth.Features.RefreshToken;
@@ -12,9 +13,9 @@ public static class AuthEndpointsExtensions
     {
         app.MapLoginEndpoint();
         app.MapRegisterEndpoint();
-        app.MapVerifyOtpEndpoint();
         app.MapRefreshTokenEndpoint();
         app.MapResetPasswordEndpoint();
+        app.MapForgotPasswordEndpoint();
         app.MapLogoutEndpoint();
         app.MapCompleteProfileEndpoint();
         app.MapVerifyOtpEndpoint();

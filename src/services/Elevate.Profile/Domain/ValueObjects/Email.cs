@@ -15,5 +15,6 @@
             Value = email;
 
         }
+        public override string ToString() => Value;
     }
 }

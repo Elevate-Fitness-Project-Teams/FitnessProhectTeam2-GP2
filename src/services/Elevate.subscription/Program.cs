@@ -36,7 +36,6 @@ namespace Elevate.subscription
                         h.Password("guest");
                     });
 
-                    // 2. السطر ده هو اللي هيكريت الـ Queue بتاعة الـ Subscription ويربطها أوتوماتيك
                     cfg.ConfigureEndpoints(context);
                 });
             });
