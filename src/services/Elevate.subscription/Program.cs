@@ -5,7 +5,10 @@ using Elevate.subscription.Infrastructure.Services;
 using Elevate.Subscription.Infrastructure.Persistence;
 using MassTransit;
 using MassTransit.RabbitMqTransport;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using SharedKernel.Extension.DependencyInjection;
+using System.Text;
 
 namespace Elevate.subscription
 {
@@ -23,7 +26,30 @@ namespace Elevate.subscription
             builder.Services.AddSwaggerGen();
             builder.Services.AddSubscriptionInfrastructure(builder.Configuration);
             builder.Services.AddEndpoints(typeof(Program).Assembly);
+            var jwtSecret = builder.Configuration["JwtSettings:Secret"];
+            if (string.IsNullOrEmpty(jwtSecret))
+            {
+                throw new InvalidOperationException("JWT Secret is missing from Configuration!");
+            }
 
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["JwtSettings:Issuer"] ?? "ElevateSubscriptionService",
+                    ValidAudience = builder.Configuration["JwtSettings:Audience"] ?? "ElevateFitnessApp",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
+                };
+            });
             builder.Services.AddMassTransit(x =>
             {
                 x.AddConsumer<UserRegisteredConsumer>();

@@ -1,5 +1,4 @@
 services:
-
   sqlserver-db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: elevate-sqlserver-db
@@ -9,9 +8,13 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=Elvate2026!
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "Elvate2026!", "-Q", "SELECT 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
       - sqlserver-db-data:/var/opt/mssql
-
 
   # --- MariaDB (Nutrition DB) ---
   nutrition-db:
@@ -32,7 +35,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
 
   # --- MariaDB (Progress DB) ---
   progress-db:
@@ -95,6 +97,8 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+      sqlserver-db:
+        condition: service_healthy
 
 
   # --- Nutrition Microservice ---
@@ -145,7 +149,9 @@ services:
     build:
       context: .
       dockerfile: src/services/FitnessCalculation/Dockerfile
-
+    depends_on:
+      sqlserver-db:
+        condition: service_healthy
 
   elevate.notifications:
     image: elevate.notifications
@@ -155,6 +161,9 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - MessageBroker__Host=rabbitmq
+    depends_on:
+      sqlserver-db:
+        condition: service_healthy
   elevate.profile:
     image: elevate.profile
     build:
@@ -172,31 +181,27 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
-  elevate.progress:
+      sqlserver-db:
+        condition: service_healthy
+  elevate.progress-sqlserver:
     image: elevate.progress
     build:
       context: .
       dockerfile: src/services/Elevate.Progress/Dockerfile
-    container_name: elevate-progress-api
+    container_name: elevate-progress-api-sql
     restart: unless-stopped
     ports:
       - "5011:8080"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      sqlserver-db:
+        condition: service_healthy
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=sqlserver-db,1433;Database=ElevateProgressDb;User Id=sa;Password=Elvate2026!;TrustServerCertificate=True;
       - JwtSettings__Secret=SuperSecretKeyThatIsVeryLongAndSecure123456!
       - MessageBroker__Host=rabbitmq
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-
-  elevate.workout:
-    image: elevate.workout
-    build:
-      context: .
-      dockerfile: src/services/Elevate.Workout/Dockerfile
-
-
   elevate.smartcoach:
     image: elevate.smartcoach
     build:
@@ -215,12 +220,11 @@ services:
       rabbitmq:
         condition: service_healthy
 
-
   elevate.subscription:
     image: elevate.subscription
     build:
       context: .
-      dockerfile: src/services/Elevate.subscription/Dockerfile
+      dockerfile: src/services/Elevate.Subscription/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=elevate-sqlserver-db,1433;Database=ElevateAuthDb;User Id=sa;Password=Elvate2026!;TrustServerCertificate=True;
@@ -229,7 +233,6 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
-
 volumes:
   sqlserver-db-data:
   nutrition-db-data:

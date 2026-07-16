@@ -87,15 +87,30 @@ namespace Elevate.Auth
             {
                 var services = scope.ServiceProvider;
                 var logger = services.GetRequiredService<ILogger<Program>>();
-                try
+                var dbContext = services.GetRequiredService<AuthDbContext>();
+
+                int retryCount = 0;
+                bool migrationSucceeded = false;
+
+                while (retryCount < 5 && !migrationSucceeded)
                 {
-                    var dbContext = services.GetRequiredService<AuthDbContext>();
-                    logger.LogInformation("[AuthService] Starting database migration & seeding...");
-                    await AuthDbSeeder.SeedAsync(dbContext, logger);
-                }
-                catch (Exception ex)
-                {
-                    logger.LogError(ex, "[AuthService] An error occurred while migrating or seeding the database.");
+                    try
+                    {
+                        logger.LogInformation($"[AuthService] Attempting database migration & seeding (Attempt {retryCount + 1})...");
+                        await AuthDbSeeder.SeedAsync(dbContext, logger);
+                        migrationSucceeded = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        retryCount++;
+                        logger.LogWarning($"[AuthService] Migration attempt {retryCount} failed. Retrying in 5 seconds...");
+                        if (retryCount >= 5)
+                        {
+                            logger.LogError(ex, "[AuthService] Migration failed after 5 attempts.");
+                            throw; 
+                        }
+                        await Task.Delay(5000); 
+                    }
                 }
             }
 

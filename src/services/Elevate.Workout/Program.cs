@@ -9,6 +9,9 @@ using Elevate.Workout.Infrastructure.Persistence;
 using Elevate.Workout.Infrastructure.Presistence;
 using Elevate.Workout.Infrastructure.Presistence.Seed;
 using Elevate.Workout.Infrastructure.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Elevate.Workout
 {
@@ -25,6 +28,32 @@ namespace Elevate.Workout
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+            var jwtSecret = builder.Configuration["JwtSettings:Secret"];
+            if (string.IsNullOrEmpty(jwtSecret))
+            {
+                throw new InvalidOperationException("JWT Secret is missing from Workout Configuration!");
+            }
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["JwtSettings:Issuer"] ?? "ElevateWorkoutService",
+                    ValidAudience = builder.Configuration["JwtSettings:Audience"] ?? "ElevateFitnessApp",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
+                };
+            });
+
+            builder.Services.AddAuthorization();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
